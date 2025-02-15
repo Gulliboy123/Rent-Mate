@@ -71,7 +71,6 @@ def check_email(request):
 
 
 
-#LOGIN PAGE LOGIC
 def LoginPage(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -87,8 +86,9 @@ def LoginPage(request):
             messages.error(request, "Invalid username or password.")
             return render(request, "login.html")
 
+        # Login the user and redirect to the homepage
         login(request, user)
-        return redirect("home")  # Redirect to a homepage after successful login
+        return redirect("home")  # After successful login, redirect to the home page
 
     return render(request, "login.html")
 
