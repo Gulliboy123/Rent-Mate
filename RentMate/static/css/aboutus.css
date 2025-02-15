@@ -1,0 +1,213 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;/*layout calculation*/
+    font-family: Arial, sans-serif;  
+}
+
+/* Header Styling */
+header {
+
+    display: flex;/*ensure horizontal allignment*/
+    justify-content: space-between; /* Pushes content to left and right */
+    align-items: center; /* Vertically aligns items in the same line */
+    padding: 0 20px; /* Adds spacing on both sides */
+    height: 70px; /* Fixed navbar height */
+    border-bottom: 1px solid  #4B5945; /* Optional: Bottom border for styling */
+    position: fixed; /* Fixed position at the top */
+    top: 0; /* Aligns the navbar to the top */
+    left: 0; /* Ensures navbar starts from the left */
+    right: 0; /* Ensures navbar ends at the right edge */
+    width: 100%; /* Makes navbar span the full width */
+    z-index: 1000; /* Ensures the navbar appears above other content */
+    background-color: #fff;
+   
+}
+
+/* Logo Styling */
+header .logo {
+    flex: 0 0 auto; /* Keeps the logo
+ fixed in size */
+
+}
+
+header .logo img {
+    height: 100%; /* Logo scales with the header height */
+    max-height: 60px; /* Prevents logo from getting too large */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Navbar Styling */
+nav {
+    flex: 1; /* Allows nav to take up remaining space */
+    text-align: right; /* Aligns the navigation links to the right */
+
+}
+
+nav ul {
+    display: flex; /* Horizontal alignment of links */
+    list-style: none; /* Removes bullet points */
+    gap: 20px; /* Adds spacing between links */
+    justify-content: flex-end; /* Ensures links stay on the right */
+    margin: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 50;
+    padding: 10px 15px; /* Clickable area for links */
+}
+
+nav ul li a:hover {
+    color:  #8bc349; /* Optional: Hover effect */
+    text-decoration: underline;
+}
+
+/* Image Section Styling */
+
+.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-top: 70px;
+}
+
+.property-image-container {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.property-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 80%;/* Shift image down by 20% of the container height */
+    
+
+}
+
+.property-image-container h1 {
+    position: absolute; /* Absolute positioning to place the text over the image */
+    color: rgb(255, 157, 0); /* White text color for visibility */
+    font-size: 4rem; /* Text size */
+    font-weight: bold; /* Makes the text bold */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Adds shadow for better contrast */
+    text-align: center; /* Centers the text */
+    padding: 0px 30px; /* Adds padding if necessary for larger text */
+}
+
+.property-image-container p {
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-size: 1.1rem;
+    margin-top: 85px; /* Adds spacing below the heading */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Subtle shadow for readability */
+}
+
+/* Intro Section Styling */
+.intro-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.intro-box {
+    display: flex;
+    flex-wrap: wrap; /* Ensures responsiveness */
+    background-color: #f8f9fa; /* Light box color */
+    padding: 20px;
+    border-radius: 10px; /* Adds rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    gap: 20px; /* Space between text and image */
+    width: 100%; /* Ensures it adapts to the screen width */
+    max-width: 1200px; /* Limits the box width on large screens */
+}
+
+.intro-text {
+    flex: 1;
+    padding: 10px;
+}
+
+.intro-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.intro-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.intro-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.intro-image img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px; /* Adds rounded corners to the image */
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+}
+
+  /*Footer*/
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 20px;
+    background-color: #e0efa2;
+    font-family: Arial, sans-serif;
+
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .footer-left {
+    max-width: 40%;
+  }
+  
+  .footer-right {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 35%;
+  }
+  
+  .contact-info {
+    margin-right: 20px;
+  }
+  
+  .social-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .social-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .social-icons a {
+    text-decoration: none;
+    margin-right: 5px;
+  }

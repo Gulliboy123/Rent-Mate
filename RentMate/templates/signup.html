@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp Page</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+    <form action="#" method="post">
+        {% csrf_token %}
+        <div class="container">
+            <div class="form-section">
+                <h1>Sign up to discover your ideal stay!</h1>
+                <p>Sign up to agree to the use of your information.</p>
+
+                <!-- Display messages -->
+                <div class="input-container">
+                    <input type="text" placeholder="First Name" id="firstname" name="firstname">
+                    <span class="error-message" id="firstname-error"></span>
+                </div>
+
+                <div class="input-container">
+                    <input type="text" placeholder="Last Name" id="lastname" name="lastname">
+                    <span class="error-message" id="lastname-error"></span>
+                </div>
+
+                <div class="input-container">
+                    <input type="text" placeholder="Email" id="email" name="email">
+                    <span class="error-message" id="email-error"></span>
+                </div>
+
+                <div class="input-container">
+                    <input type="text" placeholder="Username" id="username" name="username">
+                    <span class="error-message" id="username-error"></span>
+                </div>
+
+                <div class="input-container">
+                    <input type="password" placeholder="Password" id="password" name="password">
+                    <span class="error-message" id="password-error"></span>
+                </div>
+
+                <div class="input-container">
+                    <input type="password" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword">
+                    <span class="error-message" id="confirmpassword-error"></span>
+                </div>
+
+                <button type="submit" class="signup-button" onclick="validateForm(event)">Sign Up</button>
+                <div class="footer-text">
+                    <p>Already have an Account? <a  href="{% url 'login' %}">Login</a></p>
+                </div>
+            </div>
+    </div>
+</form>
+<script src="{% static 'js/signup.js' %}"></script>
+</body>
+</html>

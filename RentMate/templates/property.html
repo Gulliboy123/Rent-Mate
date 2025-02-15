@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostels</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/property.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="{% static 'img/RentMate.png' %}" alt="RentMate Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'property' %}">Property</a></li>
+                <li><a href="{% url 'aboutus' %}">About Us</a></li>
+                <li><a href="{% url 'contactus' %}">Contact Us</a></li>
+                <li><a href="#">List Property</a></li>
+                <li><a href="{% url 'logout' %}" class="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="image">
+            <div class="property-image-container">
+                <img src="{% static 'aboutimg/11.jpg' %}" alt="RentMate Banner">
+                <h1>About Us</h1>
+                <p>Get to know us properly.</p>
+            </div>
+        </section>
+        <!--Search-->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" placeholder="Search" class="search-input">
+                </div>
+                <div class="location-box">
+                    <input type="text" placeholder="Search location..." class="location-input">
+                </div>
+                <div class="hostel-type-box">
+                    <input type="text" placeholder="Boys or Girls Hostel..." class="type-input">
+                </div>
+                <div class="search-btn-box">
+                    <button class="search-btn">Search</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

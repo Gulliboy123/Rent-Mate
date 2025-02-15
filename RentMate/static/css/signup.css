@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url("/static/img/4.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1500px;
+    height: auto;
+    padding: 20px; /* Add padding for spacing inside the container */
+    background-color: rgba(248, 248, 248, 0.9); /* Slight transparency for visibility */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px); /* Slight blur effect for better contrast */
+    overflow: hidden;
+    box-sizing: border-box; /* Ensure padding is included in total dimensions */
+}
+
+.form-section {
+    width: 100%;
+    max-width: 400px; /* Restrict the width of the form section */
+    background-color: rgba(245, 245, 245, 0.9); /* Slightly transparent to blend with container */
+    padding: 4px; /* Space inside the form */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for distinction */
+    box-sizing: border-box; /* Include padding in total dimensions */
+}
+
+.form-section h1 {
+    margin: 0;
+    font-size: 28px; /* Adjust size */
+    color: #4B5945;
+    text-align: center; /* Center the title */
+}
+
+.form-section p {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    color: #4B5945;
+    font-size: 14px;
+    text-align: center; /* Center the paragraph */
+}
+
+
+.form-section input {
+    display: block;
+    width: 80%; /* Make the input smaller */
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-section input:focus {
+    outline: none; 
+}
+
+
+.form-section .signup-button {
+    width: 85%; /* Make the login button smaller */
+    padding: 10px;
+    margin: 4px;
+    background-color: #4B5945;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-section .signup-button:hover {
+    background-color: #91AC8F;
+}
+
+.form-section .footer-text {
+    margin-top: 16px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.form-section .footer-text a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.form-section .footer-text a:hover {
+    text-decoration: underline;
+}
+
+
+/* Input container for validation */
+.input-container {
+    width: 100%;
+    position: relative;
+    margin-left: 52px;
+
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Highlight invalid inputs */
+.input-container input.error {
+    border: 1px solid red;
+    background-color: #ffebee;
+}

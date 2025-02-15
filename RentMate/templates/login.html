@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+<body>
+    <form action="#" method="post">
+        {% csrf_token %}
+        <div class="container">
+            <div class="form-section">
+                <h1>Welcome to our Page!</h1>
+                <p>Find your next home, hassle-free.</p>
+
+                <!-- Username Field -->
+                <div class="input-group">
+                    <input type="text" placeholder="Username" id="username" name="username">
+                    <span class="error-message" id="username-error"></span>
+                </div>
+    
+                <!-- Password Field -->
+                <div class="input-group">
+                    <input type="password" placeholder="Password" id="password" name="password" class="form-control-password">
+                    <span class="error-message" id="password-error"></span>
+                    <button class="btn btn-outline-secondary" type="button" id="pass-toggle" onclick="togglePassword()">
+                        <i id="password-icon" class="fas fa-eye"></i>
+                    </button>
+                </div>
+                
+
+                <a href="#" class="forgot-password">Forgot Password</a>
+                <button type="submit" class="login-button">Login</button>
+                <div class="divider">OR</div>
+
+                <button type="button" class="btn-google">
+                    <span>Sign up with</span>
+                    <img src="{% static 'img/google.png' %}" alt="Google Logo" class="google-logo">
+                </button>
+
+                <div class="footer-text">
+                    <p>Don't have an Account? <a href="{% url 'signup' %}">Create Account</a></p>
+                </div>
+            </div>    
+        </div>
+</form>
+
+<script src="{% static 'js/login.js' %}">
+
+</script>
+</body>
+</html>

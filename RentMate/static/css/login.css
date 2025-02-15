@@ -1,0 +1,188 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url("/static/img/12.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1800px;
+    background-color: rgba(248, 248, 248, 0.9); /* Slight transparency for visibility */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 15px;
+    /* backdrop-filter: blur(8px); Apply slight blur to the container */
+}
+
+
+.form-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    position: relative;
+    padding: 35px;
+    border-radius: 8px;
+}
+
+.form-section h1 {
+    font-size: 28px;
+    color: #4B5945;
+    text-align: center;
+}
+
+.form-section p {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    color: #4B5945;
+    font-size: 14px;
+    text-align: center;
+}
+
+.form-section input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.input-group {
+    position: relative;
+    width: 100%;
+    left: -10px;
+}
+
+.form-control-password {
+    width: 100%;
+    padding-right: 40px; /* Ensure space for the icon */
+}
+
+.btn-outline-secondary {
+    position: absolute;
+    right: 2px;  /* Adjust this value as needed to position the icon */
+    top: 25%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color:rgb(107, 107, 107);
+}
+
+#password-icon {
+    font-size: 14px;
+
+}
+
+.form-section .login-button {
+    width: 106%;
+    max-width: 400px;
+    padding: 12px;
+    margin: 6px;
+    background-color: #4B5945;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-section .login-button:hover {
+    background-color: #91AC8F;
+}
+
+/* Google Sign-up Button */
+.form-section .btn-google {
+    width: 106%;
+    max-width: 388px;
+    padding: 12px;
+    margin: 6px;
+    background-color: white;
+    color: black;
+    border: 2px solid #4B5945;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-section .btn-google:hover {
+    background-color: #f5f5f5;
+}
+
+/* Google Logo */
+.google-logo {
+    width: 20px;
+    height: 20px;
+}
+
+.divider {
+    text-align: center;
+    margin: 5px 0;
+    color: #555;
+}
+
+.form-section .forgot-password {
+    text-align: right;
+    color: black;
+    margin-left:25px;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    width: 100%;
+    max-width: 400px;
+}
+.form-section .footer-text {
+    margin-top: 14px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.form-section .footer-text a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.form-section .footer-text a:hover {
+    text-decoration: underline;
+}
+
+
+/* MESSAGES */
+.error-message {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+    display: block; /* Show error message when there's an error */
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+}
+
+
+.input-group {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px; /* Ensure space for the error message */
+}
+
+.input-group input.error {
+    border-color: red; /* Red border when there's an error */
+    background-color: #ffe6e6; /* Light red background for visibility */
+}
+

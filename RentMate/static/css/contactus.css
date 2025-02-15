@@ -1,0 +1,303 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;/*layout calculation*/
+    font-family: Arial, sans-serif; 
+}
+
+
+/* Header Styling */
+header {
+
+    display: flex;/*ensure horizontal allignment*/
+    justify-content: space-between; /* Pushes content to left and right */
+    align-items: center; /* Vertically aligns items in the same line */
+    padding: 0 20px; /* Adds spacing on both sides */
+    height: 70px; /* Fixed navbar height */
+    border-bottom: 1px solid  #4B5945; /* Optional: Bottom border for styling */
+    position: fixed; /* Fixed position at the top */
+    top: 0; /* Aligns the navbar to the top */
+    left: 0; /* Ensures navbar starts from the left */
+    right: 0; /* Ensures navbar ends at the right edge */
+    width: 100%; /* Makes navbar span the full width */
+    z-index: 1000; /* Ensures the navbar appears above other content */
+    background-color: #fff;
+   
+}
+
+/* Logo Styling */
+header .logo {
+    flex: 0 0 auto; /* Keeps the logo
+ fixed in size */
+
+}
+
+header .logo img {
+    height: 100%; /* Logo scales with the header height */
+    max-height: 60px; /* Prevents logo from getting too large */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Navbar Styling */
+nav {
+    flex: 1; /* Allows nav to take up remaining space */
+    text-align: right; /* Aligns the navigation links to the right */
+
+}
+
+nav ul {
+    display: flex; /* Horizontal alignment of links */
+    list-style: none; /* Removes bullet points */
+    gap: 20px; /* Adds spacing between links */
+    justify-content: flex-end; /* Ensures links stay on the right */
+    margin: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 50;
+    padding: 10px 15px; /* Clickable area for links */
+}
+
+nav ul li a:hover {
+    color:  #8bc349; /* Optional: Hover effect */
+    text-decoration: underline;
+}
+
+/* Image Section Styling */
+
+.image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-top: 70px;
+    margin-bottom: 40px;
+}
+
+.property-image-container {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.property-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;/* Shift image down by 20% of the container height */
+    
+}
+
+.property-image-container h1 {
+    position: absolute; /* Absolute positioning to place the text over the image */
+    color: white; /* White text color for visibility */
+    font-size: 4rem; /* Text size */
+    font-weight: bold; /* Makes the text bold */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Adds shadow for better contrast */
+    text-align: center; /* Centers the text */
+    padding: 0px 20px; /* Adds padding if necessary for larger text */
+}
+
+.property-image-container p {
+    position: absolute;
+    color: white;
+    font-size: 1.1rem;
+    margin-top: 85px; /* Adds spacing below the heading */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Subtle shadow for readability */
+}
+
+/* Contact Form Section */
+.contact-section {
+    color: rgb(0, 0, 0);
+    position: relative;
+    margin-top: -25px;
+}
+
+.contact-overlay {
+    padding: 20px;
+    max-width: 650px;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.contact-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.contact-section p {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* General Alert Style */
+.messages {
+    margin: 20px 0;
+    padding: 10px;
+}
+
+.alert {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px;
+    margin: -4px -10px;
+    border-radius: 5px;
+    font-size: 16px;
+    position: relative;
+    width: 610px;
+}
+
+.alert-success {
+    background-color: #8cfd75;
+    color: white;
+}
+
+.alert-error {
+    background-color: #a10c01;
+    color: white;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+.close-btn:hover {
+    color: black;
+}
+
+/* Form Layout */
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    flex: 1;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    font-weight: 530;
+    margin-bottom: 5px;
+}
+
+/* Input Fields */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #ffffff;
+    border:1px solid black;
+}
+
+textarea {
+    height: 150px;
+}
+
+label[for="message"] {
+    margin-top: 10px;
+}
+
+/* Subject Field (Label & Input in One Line) */
+.subject-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.subject-group label {
+    white-space: nowrap;
+}
+
+/* Submit Button */
+.send-btn {
+    background-color: #e0efa2;
+    color: #4B5945;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 1%;
+    width: 20%;
+    display: block;  /* Makes the button a block-level element */
+    margin-left: auto;  /* Aligns the button to the left auto margin */
+    margin-right: auto;
+}
+
+.send-btn:hover {
+    background-color: #4B5945;
+    color: #e0efa2;
+}
+
+  /*Footer*/
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 20px;
+    background-color: #e0efa2;
+    font-family: Arial, sans-serif;
+
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .footer-left {
+    max-width: 40%;
+  }
+  
+  .footer-right {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 35%;
+  }
+  
+  .contact-info {
+    margin-right: 20px;
+  }
+  
+  .social-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .social-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .social-icons a {
+    text-decoration: none;
+    margin-right: 5px;
+  }
+
+    
