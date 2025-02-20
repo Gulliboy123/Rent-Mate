@@ -1,11 +1,19 @@
-from django.shortcuts import render,HttpResponse, redirect
+from django.shortcuts import render,get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import ContactUs, Property
 from .models import AboutUs
 import re
+from django.db.models import Q
+from django.contrib.auth import authenticate
+from django.core.mail import send_mail
+from RentMate.settings import EMAIL_HOST_USER
+
+from django.conf import settings
+
 
 # Create your views here.
 @login_required(login_url='login')
@@ -16,6 +24,7 @@ def HomePage(request):
 
 #SIGNUP PAGE LOGIC
 def SignupPage(request):
+    errors = {}
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
@@ -24,95 +33,73 @@ def SignupPage(request):
         password = request.POST.get('password')
         confirmpassword = request.POST.get('confirmpassword')
 
-        errors = {}
-
-        # Validate email
-        if '@gmail.com' not in email:
+        if not firstname:
+            errors['firstname'] = "First Name is required."
+        if not lastname:
+            errors['lastname'] = "Last Name is required."
+        if not email:
+            errors['email'] = "Email is required."
+        elif '@gmail.com' not in email:
             errors['email'] = "Email must be a valid Gmail address."
-        # Validate email uniqueness
-        if User.objects.filter(email=email).exists():
+        elif User.objects.filter(email=email).exists():
             errors['email'] = "Email already exists. Please choose a different one."
 
-
-        # Validate username length
-        if len(username) < 4:
+        if not username:
+            errors['username'] = "Username is required."
+        elif len(username) < 4:
             errors['username'] = "Username must be at least 4 characters long."
 
-
-        # Validate password complexity
         password_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
-        if not re.match(password_pattern, password):
-            errors['password'] = "Password must contain at least 8 characters, one uppercase, one lowercase, special cgaracter and one number."
+        if not password:
+            errors['password'] = "Password is required."
+        elif not re.match(password_pattern, password):
+            errors['password'] = "Password must contain atleast 8 characters, one uppercase, lowercase, number, and special character."
 
-        # Validate password match
-        if password != confirmpassword:
+        if not confirmpassword:
+            errors['confirmpassword'] = "Confirm password is required."
+        elif password != confirmpassword:
             errors['confirmpassword'] = "Passwords do not match."
-
-        # Validate required fields
-        for field in [firstname, lastname, email, username, password, confirmpassword]:
-            if not field:
-                errors[field] = "This field is required."
 
         if errors:
             return render(request, 'signup.html', {'errors': errors})
 
-        # Create the user if no errors
         my_user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email, username=username, password=password)
         my_user.save()
-        messages.success(request, "Account created successfully! Please login.")
         return redirect('login')
 
-    return render(request, 'signup.html')
+    return render(request, 'signup.html', {'errors': {}})
 
-def check_email(request):
-    email = request.GET.get('email', None)
-    exists = User.objects.filter(email=email).exists()
-    return JsonResponse({'exists': exists})
-
-
-
+#LOGIN LOGIC
 def LoginPage(request):
+    if request.user.is_authenticated:
+        return redirect("home")  # Redirect logged-in users away from the login page
+
+    errors = {}
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
 
-        if not username or not password:
-            messages.error(request, "Username and password are required.")
-            return render(request, "login.html")
+        if not username:
+            errors["username"] = "Username is required."
+        if not password:
+            errors["password"] = "Password is required."
 
-        user = authenticate(request, username=username, password=password)
+        if not errors:
+            user = authenticate(request, username=username, password=password)
 
-        if user is None:
-            messages.error(request, "Invalid username or password.")
-            return render(request, "login.html")
+            if user:
+                login(request, user)
+                return redirect("home")
+            else:
+                # Check if username exists in the database
+                if not User.objects.filter(username=username).exists():
+                    errors["username"] = "Username does not exist."
+                else:
+                    errors["password"] = "Incorrect password."
 
-        # Login the user and redirect to the homepage
-        login(request, user)
-        return redirect("home")  # After successful login, redirect to the home page
+        return render(request, "login.html", {"errors": errors, "username": username})
 
-    return render(request, "login.html")
-
-from django.http import JsonResponse
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-
-def check_credentials(request):
-    username = request.GET.get('username')
-    password = request.GET.get('password')
-
-    if not username or not password:
-        return JsonResponse({'status': 'error', 'message': 'Missing credentials'})
-
-    # Check if the username exists
-    if not User.objects.filter(username=username).exists():
-        return JsonResponse({'status': 'user_not_found'})
-
-    # Authenticate user
-    user = authenticate(username=username, password=password)
-    if user is None:
-        return JsonResponse({'status': 'password_incorrect'})
-    
-    return JsonResponse({'status': 'success'})
+    return render(request, "login.html", {"errors": {}})
 
 
 #LOGOUT LOGIC
@@ -154,3 +141,91 @@ def ContactPage(request):
 #HOMEPAGE LOGIC
 def PropertyPage(request):
     return render(request, 'property.html')
+
+
+#Forgot Password
+def ForgotPassword(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        print("Email: ", email)
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+            print("User Exists")
+            send_mail("Reset Your Password", f"Hello User: {user}!\nTo reset password, click on the given link \n http://127.0.0.1:8000/newpassword/{user}", EMAIL_HOST_USER, [email], fail_silently=True)
+            messages.success(request, "Password reset link has been sent to your email.")
+        else:
+            return render(request, 'forgotpassword.html', {"errors": {"email": "Email does not exist"}})
+    return render(request, 'forgotpassword.html')
+
+#New Password
+def NewPasswordPage(request, user):
+    userid = User.objects.get(username=user)
+    errors = {}
+    if request.method== "POST":
+        password = request.POST.get("password")
+        confirmpassword = request.POST.get("confirmpassword")
+
+        # Password validation pattern
+        password_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
+
+        # Validate password
+        if not password:
+            errors['password'] = "Password is required."
+        elif not re.match(password_pattern, password):
+            errors['password'] = "Password must be at least 8 characters, contain one uppercase, one lowercase, one number, and one special character." 
+        # Validate confirm password
+        if not confirmpassword:
+            errors['confirmpassword'] = "Confirm password is required."
+        elif password != confirmpassword:
+            errors['confirmpassword'] = "Passwords do not match."
+
+        # If there are errors, re-render the form with errors
+        if errors:
+            return render(request, 'newpassword.html', {'errors': errors})      
+        if password == confirmpassword:
+            userid.set_password(password)
+            userid.save()
+            return redirect('message')
+    return render(request, 'newpassword.html')
+
+#Message 
+def Message(request):
+    return render(request, 'message.html')
+    
+def my_account(request):
+    user = request.user
+
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        email = request.POST.get('email', '')
+        username = request.POST.get('username', '')
+
+        # Validate the data
+        if not first_name or not last_name or not email or not username:
+            messages.error(request, "All fields are required.")
+            return redirect('profile')  # Redirect back to the same page
+
+        # Update user model fields
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.username = username
+
+        try:
+            # Save the updated user details to the database
+            user.save()
+            messages.success(request, 'Your profile has been updated successfully!')
+        except Exception as e:
+            messages.error(request, f'An error occurred: {e}')
+
+        return redirect('my_account')  # After saving, redirect to the same page
+
+    return render(request, 'profile.html', {'user': user})
+
+def saved(request):
+    return render(request, 'home.html')
+
+
+def bookings(request):
+    return render(request, 'home.html')

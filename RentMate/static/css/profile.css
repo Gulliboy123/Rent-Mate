@@ -1,0 +1,178 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.settings-container {
+    display: flex;
+    width: 800px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #F4D03F;
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar .profile {
+    width: 100px; /* Increase the size */
+    height: 100px; /* Increase the size */
+    background-color: #445e78;
+    border-radius: 50%;
+    margin: 20px auto 10px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px; /* Make text larger */
+    color: white;
+    font-weight: bold;
+}
+
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sidebar li.active {
+    background-color: rgba(247, 246, 246, 0.2);
+}
+
+ul li {
+    color: rgb(0, 0, 0);
+    font-size: 14px;
+}
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.update-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 35px 10px 10px; /* Space for icon on the right */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.edit-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    transition: color 0.3s;
+}
+
+/* Message container */
+.message-container {
+    width:100%;
+    margin-top:10px;
+}
+
+/* Individual message items */
+.message-container ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Message box styling */
+.message-container li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Success message */
+.message-container li.success {
+    background-color: #28a745;
+    color: white;
+    border: 1px solid #28a745;
+}
+
+/* Error message */
+.message-container li.error {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+}
+
+/* Optional: You can add a fade-in animation for messages */
+.message-container li {
+    animation: fadeIn 0.5s ease-in-out;
+}

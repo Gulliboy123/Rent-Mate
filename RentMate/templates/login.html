@@ -20,29 +20,32 @@
 
                 <!-- Username Field -->
                 <div class="input-group">
-                    <input type="text" placeholder="Username" id="username" name="username">
-                    <span class="error-message" id="username-error"></span>
+                    <input type="text" placeholder="Username" id="username" name="username" value="{{ username }}" class="form-control {% if errors.username %}is-invalid{% endif %}">
+                    {% if errors.username %}
+                    <div class="invalid-feedback">{{ errors.username }}</div>
+                    {% endif %}
                 </div>
     
                 <!-- Password Field -->
                 <div class="input-group">
-                    <input type="password" placeholder="Password" id="password" name="password" class="form-control-password">
-                    <span class="error-message" id="password-error"></span>
+                    <input type="password" placeholder="Password" id="password" name="password" class="form-control {% if errors.password %}is-invalid{% endif %}">
+                    {% if errors.password %}
+                    <div class="invalid-feedback">{{ errors.password }}</div>
+                    {% endif %}
                     <button class="btn btn-outline-secondary" type="button" id="pass-toggle" onclick="togglePassword()">
                         <i id="password-icon" class="fas fa-eye"></i>
                     </button>
-                </div>
-                
-
-                <a href="#" class="forgot-password">Forgot Password</a>
+                </div> 
+    
+                <a href="{% url 'forgotpassword' %}" class="forgot-password">Forgot Password</a>
                 <button type="submit" class="login-button">Login</button>
                 <div class="divider">OR</div>
-
+    
                 <button type="button" class="btn-google">
                     <span>Sign up with</span>
                     <img src="{% static 'img/google.png' %}" alt="Google Logo" class="google-logo">
                 </button>
-
+    
                 <div class="footer-text">
                     <p>Don't have an Account? <a href="{% url 'signup' %}">Create Account</a></p>
                 </div>

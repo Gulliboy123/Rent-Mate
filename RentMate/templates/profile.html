@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div class="settings-container">
+    <div class="sidebar">
+        <div class="profile">
+            {{ user.first_name|default:user.username|slice:":1"|upper }}
+        </div>
+        <ul>
+            <li class="active">Account</li>
+        </ul>
+    </div>
+    
+    <div class="content">
+        <h2>Account Settings</h2>
+        {% if messages %}
+                <div class="message-container">
+                    <ul>
+                        {% for message in messages %}
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        <form method="post" id="profile-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>First Name</label>
+                <div class="input-wrapper">
+                    <input type="text" class="form-input" name="first_name" value="{{ user.first_name }}" readonly>
+                    <span class="edit-icon" onclick="enableField(this)"><i class="fa-solid fa-pencil"></i></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Last Name</label>
+                <div class="input-wrapper">
+                    <input type="text" class="form-input" name="last_name" value="{{ user.last_name }}" readonly>
+                    <span class="edit-icon" onclick="enableField(this)"><i class="fa-solid fa-pencil"></i></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Email</label>
+                <div class="input-wrapper">
+                    <input type="email" class="form-input" name="email" value="{{ user.email }}" readonly>
+                    <span class="edit-icon" onclick="enableField(this)"><i class="fa-solid fa-pencil"></i></span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Username</label>
+                <div class="input-wrapper">
+                    <input type="text" class="form-input" name="username" value="{{ user.username }}" readonly>
+                    <span class="edit-icon" onclick="enableField(this)"><i class="fa-solid fa-pencil"></i></span>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button type="submit" class="update-btn" id="save-btn">Save</button>
+                <button type="button" class="cancel-btn" onclick="disableAllFields()">Cancel</button>
+            </div>
+            
+
+    </div>
+</div>
+
+<script>
+    // Enable the input field when the pencil icon is clicked
+    function enableField(icon) {
+        const input = icon.previousElementSibling;
+        input.removeAttribute("readonly");
+        input.focus();
+    }
+    
+    // Cancel button: Reset fields to original values
+    function disableAllFields() {
+        document.querySelectorAll(".form-input").forEach(input => {
+            input.setAttribute("readonly", "readonly");
+            input.value = input.defaultValue; // Reset to original value
+        });
+    }
+
+    // Handle form submission: Ensure no readonly inputs before submission
+    document.getElementById("profile-form").addEventListener("submit", function(event) {
+        // Make sure all inputs are not readonly before submitting
+        document.querySelectorAll(".form-input").forEach(input => {
+            input.removeAttribute("readonly");
+        });
+    });
+</script>
+</body>
+</html>

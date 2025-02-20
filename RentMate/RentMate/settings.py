@@ -136,3 +136,13 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
 
 LOGIN_URL = '/login/'  # Default login URL
 LOGIN_REDIRECT_URL = '/home/'  # Where to redirect after login
+
+
+#SMTP Confirmation
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'rentmate55@gmail.com'
+EMAIL_HOST_PASSWORD = 'rqtq lvct jbfg yrwh'  # Replace with App Password

@@ -17,37 +17,66 @@
                 <p>Sign up to agree to the use of your information.</p>
 
                 <!-- Display messages -->
-                <div class="input-container">
-                    <input type="text" placeholder="First Name" id="firstname" name="firstname">
-                    <span class="error-message" id="firstname-error"></span>
-                </div>
+                <div class="name-container">
+                    <div class="input-container">
+                        <input type="text" placeholder="First Name" id="firstname" name="firstname" class="form-control {% if errors.firstname %}is-invalid{% endif %}" value="{{ request.POST.firstname }}">
+                        {% if errors.firstname %}
+                        <div class="invalid-feedback">{{ errors.firstname }}</div>
+                        {% endif %}
+                    </div>
+    
+                    <div class="input-container">
+                        <input type="text" placeholder="Last Name" id="lastname" name="lastname" class="form-control {% if errors.lastname %}is-invalid{% endif %}" value="{{ request.POST.lastname }}">
+                        {% if errors.lastname %}
+                        <div class="invalid-feedback">{{ errors.lastname }}</div>
+                        {% endif %}
+                        </div>
+                    </div>
+    
+                    <div class="input-container">
+                        <input type="text" placeholder="Email" id="email" name="email" class="form-control {% if errors.email %}is-invalid{% endif %}" value="{{ request.POST.email }}">
+                        {% if errors.email %}
+                        <div class="invalid-feedback">{{ errors.email }}</div>
+                        {% endif %}
+                    </div>
+    
+                    <div class="input-container">
+                        <input type="text" placeholder="Username" id="username" name="username"  class="form-control {% if errors.username %}is-invalid{% endif %}" value="{{ request.POST.username }}">
+                        {% if errors.username %}
+                        <div class="invalid-feedback">{{ errors.username }}</div>
+                        {% endif %}
+                        
+                    </div>
+    
+                    <div class="input-container">
+                        <input type="password" placeholder="Password" id="password" name="password" class="form-control {% if errors.password %}is-invalid{% endif %}">
+                        {% if errors.password %}
+                        <div class="invalid-feedback">{{ errors.password }}</div>
+                        {% endif %}
+                        <button class="btn btn-outline-secondary" type="button" id="pass-toggle-password" onclick="togglePassword('password')">
+                            <i id="password-icon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-container">
+                        <input type="password" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword"class="form-control {% if errors.confirmpassword %}is-invalid{% endif %}">
+                        {% if errors.confirmpassword %}
+                        <div class="invalid-feedback">{{ errors.confirmpassword }}</div>
+                        {% endif %}
+                        <button class="btn btn-outline-secondary" type="button" id="pass-toggle-confirmpassword" onclick="togglePassword('confirmpassword')">
+                            <i id="confirmpassword-icon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-container">
+                        <select id="role" name="role" required>
+                            <option value="" disabled selected>Select Your Role</option>
+                            <option value="user">User</option>
+                            <option value="hostel_owner">Property Owner</option>
+                        </select>
+                    </div>
 
-                <div class="input-container">
-                    <input type="text" placeholder="Last Name" id="lastname" name="lastname">
-                    <span class="error-message" id="lastname-error"></span>
-                </div>
-
-                <div class="input-container">
-                    <input type="text" placeholder="Email" id="email" name="email">
-                    <span class="error-message" id="email-error"></span>
-                </div>
-
-                <div class="input-container">
-                    <input type="text" placeholder="Username" id="username" name="username">
-                    <span class="error-message" id="username-error"></span>
-                </div>
-
-                <div class="input-container">
-                    <input type="password" placeholder="Password" id="password" name="password">
-                    <span class="error-message" id="password-error"></span>
-                </div>
-
-                <div class="input-container">
-                    <input type="password" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword">
-                    <span class="error-message" id="confirmpassword-error"></span>
-                </div>
-
-                <button type="submit" class="signup-button" onclick="validateForm(event)">Sign Up</button>
+                <button type="submit" class="signup-button">Sign Up</button>
                 <div class="footer-text">
                     <p>Already have an Account? <a  href="{% url 'login' %}">Login</a></p>
                 </div>
