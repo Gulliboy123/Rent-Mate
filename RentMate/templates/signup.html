@@ -9,14 +9,13 @@
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
 </head>
 <body>
-    <form action="#" method="post">
+    <form action="{% url 'signup' %}" method="post">
         {% csrf_token %}
         <div class="container">
             <div class="form-section">
                 <h1>Sign up to discover your ideal stay!</h1>
                 <p>Sign up to agree to the use of your information.</p>
 
-                <!-- Display messages -->
                 <div class="name-container">
                     <div class="input-container">
                         <input type="text" placeholder="First Name" id="firstname" name="firstname" class="form-control {% if errors.firstname %}is-invalid{% endif %}" value="{{ request.POST.firstname }}">
@@ -30,59 +29,77 @@
                         {% if errors.lastname %}
                         <div class="invalid-feedback">{{ errors.lastname }}</div>
                         {% endif %}
-                        </div>
                     </div>
+                </div>
     
-                    <div class="input-container">
-                        <input type="text" placeholder="Email" id="email" name="email" class="form-control {% if errors.email %}is-invalid{% endif %}" value="{{ request.POST.email }}">
-                        {% if errors.email %}
-                        <div class="invalid-feedback">{{ errors.email }}</div>
-                        {% endif %}
-                    </div>
-    
-                    <div class="input-container">
-                        <input type="text" placeholder="Username" id="username" name="username"  class="form-control {% if errors.username %}is-invalid{% endif %}" value="{{ request.POST.username }}">
-                        {% if errors.username %}
-                        <div class="invalid-feedback">{{ errors.username }}</div>
-                        {% endif %}
-                        
-                    </div>
-    
-                    <div class="input-container">
-                        <input type="password" placeholder="Password" id="password" name="password" class="form-control {% if errors.password %}is-invalid{% endif %}">
-                        {% if errors.password %}
-                        <div class="invalid-feedback">{{ errors.password }}</div>
-                        {% endif %}
-                        <button class="btn btn-outline-secondary" type="button" id="pass-toggle-password" onclick="togglePassword('password')">
-                            <i id="password-icon" class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="input-container">
-                        <input type="password" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword"class="form-control {% if errors.confirmpassword %}is-invalid{% endif %}">
-                        {% if errors.confirmpassword %}
-                        <div class="invalid-feedback">{{ errors.confirmpassword }}</div>
-                        {% endif %}
-                        <button class="btn btn-outline-secondary" type="button" id="pass-toggle-confirmpassword" onclick="togglePassword('confirmpassword')">
-                            <i id="confirmpassword-icon" class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="input-container">
-                        <select id="role" name="role" required>
-                            <option value="" disabled selected>Select Your Role</option>
-                            <option value="user">User</option>
-                            <option value="hostel_owner">Property Owner</option>
-                        </select>
-                    </div>
+                <div class="input-container">
+                    <input type="text" placeholder="Email" id="email" name="email" class="form-control {% if errors.email %}is-invalid{% endif %}" value="{{ request.POST.email }}">
+                    {% if errors.email %}
+                    <div class="invalid-feedback">{{ errors.email }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="input-container">
+                    <input type="text" placeholder="Username" id="username" name="username" class="form-control {% if errors.username %}is-invalid{% endif %}" value="{{ request.POST.username }}">
+                    {% if errors.username %}
+                    <div class="invalid-feedback">{{ errors.username }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="input-container password-container">
+                    <input type="password" placeholder="Password" id="password" name="password" class="form-control {% if errors.password %}is-invalid{% endif %}">
+                    <button type="button" class="toggle-password" onclick="togglePassword('password')">
+                        <i id="password-icon" class="fas fa-eye"></i>
+                    </button>
+                    {% if errors.password %}
+                    <div class="invalid-feedback">{{ errors.password }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="input-container password-container">
+                    <input type="password" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" class="form-control {% if errors.confirmpassword %}is-invalid{% endif %}">
+                    <button type="button" class="toggle-password" onclick="togglePassword('confirmpassword')">
+                        <i id="confirmpassword-icon" class="fas fa-eye"></i>
+                    </button>
+                    {% if errors.confirmpassword %}
+                    <div class="invalid-feedback">{{ errors.confirmpassword }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="input-container">
+                    <select id="role" name="role" class="form-control {% if errors.role %}is-invalid{% endif %}">
+                        <option value="" disabled {% if not request.POST.role %}selected{% endif %}>Select Your Role</option>
+                        <option value="normal_user" {% if request.POST.role == "normal_user" %}selected{% endif %}>Normal User</option>
+                        <option value="property_manager" {% if request.POST.role == "property_manager" %}selected{% endif %}>Property Manager</option>
+                        <option value="admin" {% if request.POST.role == "admin" %}selected{% endif %}>Admin</option>
+                    </select>
+                    {% if errors.role %}
+                    <div class="invalid-feedback">{{ errors.role }}</div>
+                    {% endif %}
+                </div>
 
                 <button type="submit" class="signup-button">Sign Up</button>
                 <div class="footer-text">
-                    <p>Already have an Account? <a  href="{% url 'login' %}">Login</a></p>
+                    <p>Already have an Account? <a href="{% url 'login' %}">Login</a></p>
                 </div>
             </div>
-    </div>
-</form>
-<script src="{% static 'js/signup.js' %}"></script>
+        </div>
+    </form>
+
+    <script src="{% static 'js/signup.js' %}"></script>
+    <script>
+        function togglePassword(fieldId) {
+            var field = document.getElementById(fieldId);
+            var icon = document.getElementById(fieldId + "-icon");
+            if (field.type === "password") {
+                field.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                field.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+    </script>
 </body>
 </html>
+

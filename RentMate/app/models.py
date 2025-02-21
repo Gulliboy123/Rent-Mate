@@ -1,5 +1,27 @@
 from django.db import models
 
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+class CustomUser(AbstractUser):
+    class Role(models.TextChoices):
+        NORMAL_USER = "normal_user", "Normal User"
+        PROPERTY_MANAGER = "property_manager", "Property Manager"
+        ADMIN = "admin", "Admin"
+
+    role = models.CharField(
+        max_length=20,
+        choices=Role.choices,
+        default=Role.NORMAL_USER
+    )
+
+    def is_property_manager(self):
+        return self.role == self.Role.PROPERTY_MANAGER
+
+    def is_admin(self):
+        return self.role == self.Role.ADMIN
+
+
 # Create your models here.
 class ContactUs(models.Model):
     name = models.CharField(max_length=255)

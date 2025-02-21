@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404, redirect
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -13,6 +13,8 @@ from django.core.mail import send_mail
 from RentMate.settings import EMAIL_HOST_USER
 
 from django.conf import settings
+
+User = get_user_model() 
 
 
 # Create your views here.
@@ -32,7 +34,9 @@ def SignupPage(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         confirmpassword = request.POST.get('confirmpassword')
+        role = request.POST.get('role')  # Get the selected role from the form
 
+        # Validate the form fields
         if not firstname:
             errors['firstname'] = "First Name is required."
         if not lastname:
@@ -53,21 +57,33 @@ def SignupPage(request):
         if not password:
             errors['password'] = "Password is required."
         elif not re.match(password_pattern, password):
-            errors['password'] = "Password must contain atleast 8 characters, one uppercase, lowercase, number, and special character."
+            errors['password'] = "Password must contain at least 8 characters, one uppercase, lowercase, number, and special character."
 
         if not confirmpassword:
             errors['confirmpassword'] = "Confirm password is required."
         elif password != confirmpassword:
             errors['confirmpassword'] = "Passwords do not match."
 
+        if not role:
+            errors['role'] = "Role is required." 
+
         if errors:
             return render(request, 'signup.html', {'errors': errors})
 
-        my_user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email, username=username, password=password)
+       
+        my_user = User.objects.create_user(
+            first_name=firstname,
+            last_name=lastname,
+            email=email,
+            username=username,
+            password=password,
+            role=role  
+        )
         my_user.save()
         return redirect('login')
 
     return render(request, 'signup.html', {'errors': {}})
+
 
 #LOGIN LOGIC
 def LoginPage(request):

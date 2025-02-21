@@ -18,10 +18,21 @@
         </div>
         <nav>
           <ul>
+            {% if user.role == "property_manager" %}
+    <p>Welcome, Property Manager!</p>
+{% elif user.role == "admin" %}
+    <p>Welcome, Admin!</p>
+{% else %}
+    <p>Welcome, User!</p>
+{% endif %}
+
             <li class="{% if request.path == '/home/' %} active {% endif %}"><a href="{% url 'home' %}">Home</a></li>
                 <li class="{% if request.path == '/property/' %} active {% endif %}"><a href="{% url 'property' %}">Properties</a></li>
                 <li class="{% if request.path == '/aboutus/' %} active {% endif %}"><a href="{% url 'aboutus' %}">About Us</a></li>
                 <li class="{% if request.path == '/contactus/' %} active {% endif %}"><a href="{% url 'contactus' %}">Contact Us</a></li>
+                {% if user.role == "property_manager" %}
+                <li class=" "><a href="">Property Dashboard</a></li>
+                {% endif %}
                 <li><a href="#">Register Hostel</a></li>
 
                 {% if user.is_authenticated %}
