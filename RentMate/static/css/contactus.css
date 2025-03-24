@@ -65,7 +65,7 @@ nav {
   
   /* Active Link Styling */
   nav ul li.active a {
-    background-color: #f4c91d; /* Yellow background */
+    background-color: #ef9e13;  /* Yellow background */
     color: #ffffff; /* White text */
     border-radius: 25px; /* Ensures a perfect oval shape */
     font-weight: 500; /* Bolder text */
@@ -73,7 +73,7 @@ nav {
   
   /* Hover Effect */
   nav ul li a:hover {
-    background-color: #F4D03F; /* Slightly lighter yellow */
+    background-color: #ef9e13;  /* Slightly lighter yellow */
     color: #ffffff;
     text-decoration: none; /* Removes underline */
     border-radius: 25px;
@@ -99,7 +99,7 @@ nav {
   }
   
   .dropdown-toggle:hover {
-    background-color: #F4D03F;
+    background-color: #ef9e13; 
     color: #ffffff;
   }
   
@@ -156,7 +156,7 @@ nav {
   }
   
   .dropdown-menu a:hover {
-    background-color: #F4D03F;
+    background-color: #ef9e13; 
     color: #ffffff;
   }
   
@@ -223,141 +223,158 @@ nav {
 
 /* Contact Form Section */
 .contact-section {
-    color: rgb(0, 0, 0);
-    position: relative;
-    margin-top: -25px;
+  color: rgb(0, 0, 0);
+  position: relative;
+  margin-top: -25px;
 }
 
 .contact-overlay {
-    padding: 20px;
-    max-width: 650px;
-    margin: 0 auto;
-    border-radius: 10px;
+  padding: 20px;
+  max-width: 650px;
+  margin: 0 auto;
+  border-radius: 10px;
 }
 
 .contact-section h2 {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .contact-section p {
-    font-size: 14px;
-    text-align: center;
-    margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 /* General Alert Style */
 .messages {
-    margin: 20px 0;
-    padding: 10px;
+  margin: 20px 0;
+  padding: 10px;
 }
 
 .alert {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 11px;
-    margin: -4px -10px;
-    border-radius: 5px;
-    font-size: 16px;
-    position: relative;
-    width: 610px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 11px;
+  margin: -4px -10px;
+  border-radius: 5px;
+  font-size: 16px;
+  position: relative;
+  width: 610px;
 }
 
 .alert-success {
-    background-color: #8cfd75;
-    color: white;
+  background-color: #19640a;
+  color: white;
 }
 
-.alert-error {
-    background-color: #a10c01;
-    color: white;
-}
 
 .close-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    padding: 0 5px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0 5px;
 }
 
 .close-btn:hover {
-    color: black;
+  color: black;
 }
 
 /* Form Layout */
 .form-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .form-group {
-    flex: 1;
+  flex: 1;
+  margin-top:5px;
 }
 
 label {
-    display: block;
-    font-size: 16px;
-    font-weight: 530;
-    margin-bottom: 5px;
+  display: block;
+  font-size: 16px;
+  font-weight: 530;
+  margin-bottom: 5px;
 }
 
 /* Input Fields */
 input, textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    background-color: #ffffff;
-    border:1px solid black;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #ffffff;
+  border:1px solid black;
 }
 
 textarea {
-    height: 150px;
+  height: 150px;
 }
 
 label[for="message"] {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 /* Subject Field (Label & Input in One Line) */
 .subject-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .subject-group label {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 /* Submit Button */
 .send-btn {
-    background-color: #e0efa2;
-    color: #4B5945;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 1%;
-    width: 20%;
-    display: block;  /* Makes the button a block-level element */
-    margin-left: auto;  /* Aligns the button to the left auto margin */
-    margin-right: auto;
+  background-color: #f4c91d;
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 1%;
+  width: 20%;
+  display: block;  /* Makes the button a block-level element */
+  margin-left: auto;  /* Aligns the button to the left auto margin */
+  margin-right: auto;
 }
 
 .send-btn:hover {
-    background-color: #4B5945;
-    color: #e0efa2;
+  background-color: #4B5945;
+  color: #e0efa2;
 }
+
+
+/*Error message*/
+.form-group input.is-invalid {
+background-color: rgb(255, 230, 230);
+border: 2px solid rgb(170, 13, 13);
+}
+/*Error message*/
+.form-group textarea.is-invalid {
+background-color: rgb(255, 230, 230);
+border: 2px solid rgb(170, 13, 13);
+}
+.invalid-feedback {
+color: rgb(184, 58, 11);
+font-size: 14px;
+margin-top: 3px;
+margin-bottom: -3px;
+margin-right: 17px;
+}
+
 
   /*Footer*/
   .footer {

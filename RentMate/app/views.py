@@ -1,16 +1,19 @@
-from django.shortcuts import render,get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404,redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import ContactUs, Property
+from .models import PropertyDetail, PropertyImage
+from .models import ContactUs
 from .models import AboutUs
 import re
 from django.db.models import Q
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from RentMate.settings import EMAIL_HOST_USER
+#email validation
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 
 from django.conf import settings
 
@@ -20,7 +23,7 @@ User = get_user_model()
 # Create your views here.
 @login_required(login_url='login')
 def HomePage(request):
-    properties = Property.objects.all()
+    properties = PropertyDetail.objects.filter(approval_status='approved')
     return render(request, 'home.html', {'properties':properties})
 
 
@@ -88,7 +91,15 @@ def SignupPage(request):
 #LOGIN LOGIC
 def LoginPage(request):
     if request.user.is_authenticated:
-        return redirect("home")  # Redirect logged-in users away from the login page
+        print(f"Authenticated user: {request.user.username}")
+        print(f"User role: {request.user.role}")
+        
+        if request.user.role == "property_manager":
+            return redirect('propertyownerdashboard')
+        elif request.user.role == "admin":
+            return redirect('admin')
+        else:
+            return redirect('home')  # Redirect normal users to home
 
     errors = {}
     if request.method == "POST":
@@ -131,33 +142,82 @@ def AboutPage(request):
 
 #CONTACTPAGE LOGIC
 def ContactPage(request):
+    errors = {}
+    is_not_logged_in = not request.user.is_authenticated  # Check if the user is logged in
     if request.method == 'POST':
+        if is_not_logged_in:
+            return render(request, 'contactus.html', {
+                "is_not_logged_in": True, 
+                "errors": errors
+            })  
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         subject = request.POST.get('subject')
         message = request.POST.get('message')
+        email = request.POST.get('email')
 
         # Basic validation
-        if not name or not phone or not subject or not message:
-            messages.error(request, "All fields are required!")
-            return redirect('contactus')
+        if not name:
+            errors["name"] = "Name is required."
+        if not phone:
+            errors["phone"] = "Phone number is required"
+        elif not re.match(r'^\d{10}$', phone):
+            errors["phone"] = "Number must contain exactly 10 digits."
+        if not subject:
+            errors["subject"] = "Subject is required."
+        if not message:
+            errors["message"] = "Message is required."
+        if not email:
+            errors['email'] = "Email is required."
+        else:
+            try:
+                validate_email(email) 
+            except ValidationError:
+                errors["email"] = "Enter a valid email address."
+        if errors:
+            return render(request, 'contactus.html', {"errors": errors, "name": name, "phone": phone, "subject": subject, "message": message, "email": email, "is_not_logged_in": is_not_logged_in,})
         
-        # Phone number validation (must contain exactly 10 digits)
-        if not re.match(r'^\d{10}$', phone):
-            messages.error(request, "Number must contain exactly 10 digits!")
-            return redirect('contactus')
         
         # Save inquiry to the database
-        contactus = ContactUs(name=name, phone=phone, subject=subject, message=message)
+        contactus = ContactUs(name=name, phone=phone, subject=subject, message=message,email=email)
         contactus.save()
         messages.success(request, "Inquirey Sent Successfully")
         return redirect('contactus')
     
-    return render(request, 'contactus.html')
+    return render(request, 'contactus.html', {"errors": {}, "is_not_logged_in": is_not_logged_in})
+
 #HOMEPAGE LOGIC
 def PropertyPage(request):
-    return render(request, 'property.html')
+    properties = PropertyDetail.objects.all()  # Fetch all properties initially
+    
+    # Get the search filters from the GET request
+    city = request.GET.get('city')
+    property_type = request.GET.get('property_type')
+    price_per_night = request.GET.get('price_per_night')
 
+    # Apply filters based on user inputs
+    if city:
+        properties = properties.filter(Q(city__icontains=city))  # Fixed field name
+    if property_type:
+        properties = properties.filter(Q(property_type__icontains=property_type))  # Fixed field name
+    if price_per_night:
+        try:
+            price_per_night = float(price_per_night)  # Convert to float
+            properties = properties.filter(price_per_night__lte=price_per_night)  # Fixed field name
+        except ValueError:
+            pass  # Ignore invalid values
+    
+    return render(request, 'property.html', {'property': properties})
+
+
+def property_detail(request, id):
+    property_obj = get_object_or_404(PropertyDetail, id=id)  # Fetch property or return 404
+    amenities_list = property_obj.amenities.split(", ") if property_obj.amenities else []  # Convert amenities to a list
+
+    return render(request, 'propertydetail.html', {
+        'property': property_obj,
+        'amenities': amenities_list  # Pass as a list to template
+    })
 
 #Forgot Password
 def ForgotPassword(request):
@@ -245,3 +305,69 @@ def saved(request):
 
 def bookings(request):
     return render(request, 'home.html')
+
+def PropertyAdd(request):
+    if request.method == "POST":
+        # Extract form data
+        title = request.POST.get("propertyName", "")
+        description = request.POST.get("propertyDescription", "")
+        property_type = request.POST.get("propertyType", "")
+        street_address = request.POST.get("streetAddress", "")
+        city = request.POST.get("city", "")
+        country = request.POST.get("country", "")
+        neighbourhood = request.POST.get("neighbourhood", "")
+        num_kitchens = int(request.POST.get("numKitchens", 0))
+        num_bedrooms = int(request.POST.get("numBedrooms", 0))
+        num_bathrooms = int(request.POST.get("numBathrooms", 0))
+        price_per_night = float(request.POST.get("pricePerNight", 0))
+        availability = request.POST.get("availability", "")
+        license_number = request.POST.get("licenseNumber", "")
+        amenities = request.POST.getlist("amenities")  # Multiple amenities as a list
+        thumbnail = request.FILES.get("thumbnail")  # Single thumbnail image
+        images = request.FILES.getlist("propertyImages")  # Multiple property images
+
+        # Ensure required fields are not empty
+        if not title or not description or not property_type or not city or not country:
+            messages.error(request, "Please fill in all required fields.")
+            return redirect('owner_add_property')  # Redirect to the same page to show the error message
+
+        # Save the Property object
+        property_obj = PropertyDetail(
+            title=title,
+            description=description,
+            property_type=property_type,
+            street_address=street_address,
+            city=city,
+            country=country,
+            neighbourhood=neighbourhood,
+            num_kitchens=num_kitchens,
+            num_bedrooms=num_bedrooms,
+            num_bathrooms=num_bathrooms,
+            price_per_night=price_per_night,
+            availability=availability,
+            license_number=license_number,
+            amenities=", ".join(amenities)  # Store as comma-separated values
+        )
+        property_obj.save()
+
+        # Save the thumbnail image if exists
+        if thumbnail:
+            PropertyImage.objects.create(property=property_obj, image=thumbnail)
+
+        # Save multiple property images if any exist
+        for image in images:
+            PropertyImage.objects.create(property=property_obj, image=image)
+
+        approved_properties = PropertyDetail.objects.filter(approval_status="approved")
+    
+        messages.success(request, "Property Submitted Successfully!")
+        return redirect("propertyadd")  # Redirect to the dashboard or another page
+
+    return render(request, 'propertyadd.html')
+
+
+def Propertyownerdashboard(request):
+    return render(request, 'propertyownerdashboard.html')        
+        
+        
+        

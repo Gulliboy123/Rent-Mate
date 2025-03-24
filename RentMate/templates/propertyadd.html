@@ -1,0 +1,454 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Add Property</title>
+    <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+}
+.sidebar {
+    width: 250px;
+    background-color: #34495e;
+    height: 100vh;
+    color: white;
+    position: fixed;
+}
+
+.sidebar .logo {
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding:2px;
+   margin:2px;
+}
+
+.sidebar ul li a:hover {
+   background-color: #F1C40F;
+
+}
+/* Custom Style for Log Out */
+.sidebar ul li.logout {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+}
+
+.sidebar ul li.logout a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f40808;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.sidebar ul li.logout i {
+    font-size: 20px;
+    margin-right: 10px;
+}
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-left: calc(250px + 100px); /* Add this line to shift the container to the right of the navbar */
+    width: calc(100% - 270px); /* Ensure the container width adjusts based on the sidebar */
+    flex-grow: 1; /* Ensures it fills the remaining space */
+}
+
+h1 {
+    text-align: center;
+    color: #106E94;
+    margin-bottom: 30px;
+}
+
+label {
+    font-size: 14px;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #106E94;
+    color: white;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e91e63;
+}
+
+button i {
+    margin-right: 8px;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+}
+
+.checkbox-group label {
+    display: inline-block;
+    margin: 0;
+}
+
+.inline-fields {
+    display: flex;
+    gap: 20px;
+}
+
+.inline-fields input {
+    width: 90%;
+}
+
+.amenities-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.amenities-group button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f8f8f8;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+}
+
+.amenities-group button:hover {
+    background-color: #F25E86;
+}
+
+button {
+    margin-top: 30px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 30px;
+    background-color: #F25E86;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-area {
+    border: 2px dashed #106E94;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fafafa;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.upload-area:hover {
+    background-color: #e3f2fd;
+}
+
+.upload-area i {
+    font-size: 40px;
+    color: #106E94;
+}
+
+.upload-area p {
+    margin-top: 10px;
+    color: #000000;
+}
+
+#imagePreview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-item {
+    position: relative;
+    display: inline-block;
+}
+
+.image-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.remove-btn {
+    position: absolute;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+input::placeholder {
+    color: grey;
+    font-size: small;
+}
+
+.required::after {
+    content: " *";
+    color: red;
+}
+
+/* Success message styling */
+.alert-success {
+    position: absolute; /* Absolute positioning to overlay it */
+    top: -50px; /* Adjust this value to place the message where you want */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 5px;
+    width: 90%;
+    text-align: center;
+    z-index: 10;
+}
+
+
+    </style>
+</head>
+<body>
+    {% if messages %}
+    <div class="alert alert-success">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+    <!-- Header -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="{% static 'img/Rentmate.png' %}" alt="Logo" style="width: 200px; margin-right:10px;">
+        </div>
+        <ul>
+            <li><a href="{% url 'propertyownerdashboard' %}"><i class="fas fa-info-circle"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-credit-card"></i> Booking & Payment</a></li>
+            <li><a href="{% url 'propertyadd' %}"><i class="fas fa-plus-circle"></i> Add Property</a></li>
+            <li><a href="#"><i class="fas fa-users"></i> User Details</a></li>
+            <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+              <li><a href="#"><i class="fas fa-home"></i> My Property</a></li>
+            <li class="logout"><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h1>ADD PROPERTY</h1>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Property Name -->
+            <label for="propertyName" class="required">Property Title</label>
+            <input type="text" id="propertyName" name="propertyName" required>
+
+            <!-- Property Type -->
+            <label for="propertyType" class="required">Property Type</label>
+            <select id="propertyType" name="propertyType" required>
+                <option value=""></option>
+                <option value="Flat">Flat</option>
+                <option value="Room">Room</option>
+            </select>
+
+            <!-- Property Description -->
+            <label for="propertyDescription" class="required">Property Description</label>
+            <textarea id="propertyDescription" name="propertyDescription" rows="4" required></textarea>
+
+            <!-- Address Fields (Street Address and City in Same Line) -->
+            <div class="inline-fields">
+                <div>
+                    <label for="streetAddress" class="required">Street Address</label>
+                    <input type="text" id="streetAddress" name="streetAddress" placeholder="eg. Street Name, Code" required>
+                </div>
+                <div>
+                    <label for="city" class="required">Place</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div>
+                    <label for="country" class="required">City</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+            </div>
+
+            <!-- Neighbourhood -->
+            <label for="neighbourhood" class="required">Neighbourhood</label>
+            <input type="text" id="neighbourhood" name="neighbourhood" required>
+
+            <!-- Number of Kitchens, Bedrooms, and Bathrooms in Same Line -->
+            <div class="inline-fields">
+                <div>
+                    <label for="numKitchens" class="required">Number of Kitchens</label>
+                    <input type="number" id="numKitchens" name="numKitchens" >
+                </div>
+                <div>
+                    <label for="numBedrooms" class="required">Number of Bedrooms</label>
+                    <input type="number" id="numBedrooms" name="numBedrooms" required>
+                </div>
+                <div>
+                    <label for="numBathrooms" class="required">Number of Bathrooms</label>
+                    <input type="number" id="numBathrooms" name="numBathrooms" >
+                </div>
+            </div>
+
+            <!-- Price per Night -->
+            <label for="pricePerNight" class="required">Price per Night</label>
+            <input type="number" id="pricePerNight" name="pricePerNight" required>
+
+            <!-- Availability -->
+            <label for="availability" class="required">Availability</label>
+            <select id="availability" name="availability" required>
+                <option value="available">Available</option>
+                <option value="unavailable">Unavailable</option>
+            </select>
+
+            <label for="propertyThumbnail"><b>Upload Thumbnail</b></label>
+            <input type="file" id="propertyImages" name="propertyImages" accept="image/*" multiple required>
+            
+            <label for="propertyImages">Upload Photos</label>
+            <div class="upload-area" id="uploadImages">
+                <i class="fas fa-images"></i>
+                <p>Click or drag files to this area to upload</p>
+                <input type="file" id="propertyImages" name="propertyImages" accept="image/*" multiple hidden>
+            </div>
+            <p style="color: red; font-size: 14px;">* Only property-related photos are allowed. Irrelevant photos will reject the property post.</p>
+            
+            <div id="imagePreview"></div>
+
+            <!-- Show the number of selected images -->
+            <p id="fileCountMessage"></p>
+
+            <!-- License Number -->
+            <label for="licenseNumber" style="margin-top: 2%;" class="required">License Number</label>
+            <input type="text" id="licenseNumber" name="licenseNumber" required>
+
+           <!-- Amenities -->
+            <label>Amenities</label>
+            <div class="amenities-group">
+                <label><input type="checkbox" name="amenities" value="Lawn"><i class="fas fa-leaf"></i> Lawn</label>
+                <label><input type="checkbox" name="amenities" value="Drainage"><i class="fas fa-water"></i> Drainage</label>
+                <label><input type="checkbox" name="amenities" value="Jacuzzi"><i class="fas fa-hot-tub"></i> Jacuzzi</label>
+                <label><input type="checkbox" name="amenities" value="Garage"><i class="fas fa-car"></i> Garage</label>
+                <label><input type="checkbox" name="amenities" value="Parking"><i class="fas fa-parking"></i> Parking</label>
+                <label><input type="checkbox" name="amenities" value="Air Condition"><i class="fas fa-snowflake"></i> Air Condition</label>
+                <label><input type="checkbox" name="amenities" value="Balcony"><i class="fas fa-balance-scale"></i> Balcony</label>
+                <label><input type="checkbox" name="amenities" value="Deck"><i class="fas fa-palette"></i> Deck</label>
+                <label><input type="checkbox" name="amenities" value="Fencing"><i class="fas fa-shield-alt"></i> Fencing</label>
+                <label><input type="checkbox" name="amenities" value="Water Supply"><i class="fas fa-tint"></i> Water Supply</label>
+                <label><input type="checkbox" name="amenities" value="Garden"><i class="fas fa-seedling"></i> Garden</label>
+                <label><input type="checkbox" name="amenities" value="CCTV"><i class="fas fa-camera"></i> CCTV</label>
+                <label><input type="checkbox" name="amenities" value="Pet Allowed"><i class="fas fa-paw"></i> Pet Allowed</label>                
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-plus"></i> Add Property
+            </button>
+        </form>
+    </div>
+</body>
+<script>
+    document.getElementById('uploadImages').addEventListener('click', function () {
+        document.getElementById('propertyImages').click();
+    });
+    document.getElementById('propertyImages').addEventListener('change', function (event) {
+        const files = event.target.files;
+        const previewContainer = document.getElementById('imagePreview');
+        previewContainer.innerHTML = '';
+        
+        Array.from(files).forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imageItem = document.createElement('div');
+                imageItem.classList.add('image-item');
+                imageItem.innerHTML = `
+                    <img src="${e.target.result}" alt="Uploaded Image">
+                    <button type="button" class="remove-btn" data-index="${index}">&times;</button>
+                `;
+                previewContainer.appendChild(imageItem);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+    
+    document.getElementById('imagePreview').addEventListener('click', function (event) {
+        if (event.target.classList.contains('remove-btn')) {
+            event.target.parentElement.remove();
+        }
+    });
+</script>
+</html>

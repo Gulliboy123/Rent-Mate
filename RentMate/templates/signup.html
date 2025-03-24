@@ -7,6 +7,7 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
     <form action="{% url 'signup' %}" method="post">
@@ -46,24 +47,24 @@
                     {% endif %}
                 </div>
 
-                <div class="input-container password-container">
+                <div class="input-container">
                     <input type="password" placeholder="Password" id="password" name="password" class="form-control {% if errors.password %}is-invalid{% endif %}">
-                    <button type="button" class="toggle-password" onclick="togglePassword('password')">
-                        <i id="password-icon" class="fas fa-eye"></i>
-                    </button>
                     {% if errors.password %}
                     <div class="invalid-feedback">{{ errors.password }}</div>
                     {% endif %}
-                </div>
-
-                <div class="input-container password-container">
-                    <input type="password" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword" class="form-control {% if errors.confirmpassword %}is-invalid{% endif %}">
-                    <button type="button" class="toggle-password" onclick="togglePassword('confirmpassword')">
-                        <i id="confirmpassword-icon" class="fas fa-eye"></i>
+                    <button class="btn btn-outline-secondary" type="button" id="pass-toggle-password" onclick="togglePassword('password')">
+                        <i id="password-icon" class="fas fa-eye"></i>
                     </button>
+                </div>
+                
+                <div class="input-container">
+                    <input type="password" placeholder="Confirm Password" id="confirmpassword" name="confirmpassword"class="form-control {% if errors.confirmpassword %}is-invalid{% endif %}">
                     {% if errors.confirmpassword %}
                     <div class="invalid-feedback">{{ errors.confirmpassword }}</div>
                     {% endif %}
+                    <button class="btn btn-outline-secondary" type="button" id="pass-toggle-confirmpassword" onclick="togglePassword('confirmpassword')">
+                        <i id="confirmpassword-icon" class="fas fa-eye"></i>
+                    </button>
                 </div>
                 
                 <div class="input-container">
@@ -88,18 +89,21 @@
 
     <script src="{% static 'js/signup.js' %}"></script>
     <script>
+        // Function to toggle password visibility
         function togglePassword(fieldId) {
-            var field = document.getElementById(fieldId);
-            var icon = document.getElementById(fieldId + "-icon");
-            if (field.type === "password") {
-                field.type = "text";
-                icon.classList.replace("fa-eye", "fa-eye-slash");
+            var passwordField = document.getElementById(fieldId);
+            var passwordIcon = document.getElementById(fieldId + "-icon");
+        
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordIcon.classList.remove("fa-eye");
+                passwordIcon.classList.add("fa-eye-slash");
             } else {
-                field.type = "password";
-                icon.classList.replace("fa-eye-slash", "fa-eye");
+                passwordField.type = "password";
+                passwordIcon.classList.remove("fa-eye-slash");
+                passwordIcon.classList.add("fa-eye");
             }
         }
     </script>
 </body>
 </html>
-

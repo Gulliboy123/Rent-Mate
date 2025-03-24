@@ -65,7 +65,7 @@ nav ul li a {
 
 /* Active Link Styling */
 nav ul li.active a {
-  background-color: #f4c91d; /* Yellow background */
+  background-color: #ef9e13;  /* Yellow background */
   color: #ffffff; /* White text */
   border-radius: 25px; /* Ensures a perfect oval shape */
   font-weight: 500; /* Bolder text */
@@ -73,7 +73,7 @@ nav ul li.active a {
 
 /* Hover Effect */
 nav ul li a:hover {
-  background-color: #F4D03F; /* Slightly lighter yellow */
+  background-color: #ef9e13; /* Slightly lighter yellow */
   color: #ffffff;
   text-decoration: none; /* Removes underline */
   border-radius: 25px;
@@ -99,7 +99,7 @@ nav ul li a:hover {
 }
 
 .dropdown-toggle:hover {
-  background-color: #F4D03F;
+  background-color: #ef9e13; 
   color: #ffffff;
 }
 
@@ -156,7 +156,7 @@ nav ul li a:hover {
 }
 
 .dropdown-menu a:hover {
-  background-color: #F4D03F;
+  background-color: #ef9e13; 
   color: #ffffff;
 }
 
@@ -238,7 +238,7 @@ nav ul li a:hover {
 }
 
 .inner-card {
-    background-color: #A3B6A2; /* Orange color for the container */
+    background-color: #e1a949; /* Orange color for the container */
     border-radius: 5px;
     width: 90%; /* Reduced width to make box smaller */
     margin: 0 auto; /* Center align within grid */
@@ -291,7 +291,7 @@ nav ul li a:hover {
 }
 
 .view-details-btn {
-  background-color: #39993c;
+  background-color: #7a550b;
   color: white;
   font-size: 14px;
   padding: 8px 12px;
@@ -301,9 +301,6 @@ nav ul li a:hover {
   transition: 0.3s ease-in-out;
 }
 
-.view-details-btn:hover {
-  background-color: #49a14c;
-}
 
  /*explore*/
  .explore-section {

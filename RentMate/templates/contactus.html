@@ -1,144 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <!-- Font Awesome CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/contactus.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Page</title>
+  <!-- Font Awesome CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/contactus.css' %}">
 </head>
+
 <body>
-    <header>
-        <div class="logo">
-            <a href="#">
-                <img src="{% static 'img/RentMate.png' %}" alt="RentMate Logo">
-            </a>
-        </div>
-        <nav>
-          <ul>
-            <li class="{% if request.path == '/home/' %} active {% endif %}"><a href="{% url 'home' %}">Home</a></li>
-            <li class="{% if request.path == '/property/' %} active {% endif %}"><a href="{% url 'property' %}">Properties</a></li>
-            <li class="{% if request.path == '/aboutus/' %} active {% endif %}"><a href="{% url 'aboutus' %}">About Us</a></li>
-            <li class="{% if request.path == '/contactus/' %} active {% endif %}"><a href="{% url 'contactus' %}">Contact Us</a></li>
-            <li><a href="#">Register Property</a></li>
-
-            {% if user.is_authenticated %}
-            <li class="dropdown">
-              <div class="dropdown-toggle">
-                <div class="rounded-circle">{{ user.first_name|default:user.username|first|upper }}</div>
-                <span>{{ user.get_full_name|default:user.username }}</span>
-              </div>
-              <div class="dropdown-menu">
-                <a href="{% url 'my_account' %}">My account</a>
-                <a href="{% url 'saved' %}">Saved</a>
-                <a href="{% url 'bookings' %}">Booking History</a>
-                <div class="dropdown-divider"></div>
-                <a href="{% url 'logout' %}" class="text-danger">Logout</a>
-              </div>
-            </li>
-          {% else %}
-            <li><a href="{% url 'login' %}">Login</a></li>
-          {% endif %}
-        </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="image">
-            <div class="property-image-container">
-                <img src="{% static 'img/7.png' %}" alt="RentMate Banner">
-                <h1>Contact Us</h1>
-                <p>Resolve your inquires.</p>
-            </div>
-        </section>
-                
-        
-        <!-- Contact Form Section -->
-        <div class="contact-section">
-          <div class="contact-overlay">
-            {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-                        <span>{{ message }}</span>
-                        <button class="close-btn" onclick="closeAlert(this)">x</button>
-                    </div>
-                {% endfor %}
-            </div>
+  <header>
+    <div class="logo">
+      <a href="#">
+        <img src="{% static 'img/RentMate.png' %}" alt="RentMate Logo">
+      </a>
+    </div>
+    <nav>
+      <ul>
+        {% if user.role == "property_manager" %}
+        <p>Welcome, Property Manager!</p>
+        {% elif user.role == "admin" %}
+        <p>Welcome, Admin!</p>
+        {% else %}
+        <p>Welcome, User!</p>
         {% endif %}
-              <h2>DROP A MESSAGE</h2>
-              <p>Easily forms to resolve your inquiry without any server-side integration.</p>
 
+        <li class="{% if request.path == '/home/' %} active {% endif %}"><a href="{% url 'home' %}">Home</a></li>
+        <li class="{% if request.path == '/property/' %} active {% endif %}"><a
+            href="{% url 'property' %}">Properties</a></li>
+        <li class="{% if request.path == '/aboutus/' %} active {% endif %}"><a href="{% url 'aboutus' %}">About Us</a>
+        </li>
+        <li class="{% if request.path == '/contactus/' %} active {% endif %}"><a href="{% url 'contactus' %}">Contact
+            Us</a></li>
+        {% if user.role == "property_manager" %}
+        <li class=" "><a href="">Property Dashboard</a></li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <li class="dropdown">
+          <div class="dropdown-toggle">
+            <div class="rounded-circle">{{ user.first_name|default:user.username|first|upper }}</div>
+            <span>{{ user.get_full_name|default:user.username }}</span>
+          </div>
+          <div class="dropdown-menu">
+            <a href="{% url 'my_account' %}">My account</a>
+            <a href="{% url 'saved' %}">Saved</a>
+            <a href="{% url 'bookings' %}">Booking History</a>
+            <div class="dropdown-divider"></div>
+            <a href="{% url 'logout' %}" class="text-danger">Logout</a>
+          </div>
+        </li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="image">
+      <div class="property-image-container">
+        <img src="{% static 'img/7.png' %}" alt="RentMate Banner">
+        <h1>Contact Us</h1>
+        <p>Resolve your inquires.</p>
+      </div>
+    </section>
+
+
+    <!-- Contact Form Section -->
+    <div class="contact-section">
+      <div class="contact-overlay">
+        <h2>DROP A MESSAGE</h2>
+        <p>Easily forms to resolve your inquiry without any server-side integration.</p>
+
+        {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                            <span>{{ message }}</span>
+                            <button class="close-btn" onclick="this.parentElement.style.display='none';">x</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            
+              <!-- Contact Form -->
               <form method="post">
                   {% csrf_token %}
                   <div class="form-row">
                       <div class="form-group">
                           <label for="name">Name</label>
-                          <input type="text" id="name" name="name">
+                          <input type="text" id="name" name="name" value="{{ name|default:'' }}" class="form-control {% if errors.name %}is-invalid{% endif %}">
+                          {% if errors.name %}
+                            <div class="invalid-feedback">{{ errors.name }}</div>
+                          {% endif %}
                       </div>
                       <div class="form-group">
                           <label for="phone">Phone</label>
-                          <input type="text" id="phone" name="phone">
+                          <input type="text" id="phone" name="phone" value="{{ phone|default:'' }}" class="form-control {% if errors.phone %}is-invalid{% endif %}">
+                          {% if errors.phone %}
+                            <div class="invalid-feedback">{{errors.phone}}</div>
+                          {% endif %}
                       </div>
                   </div>
                   <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" value="{{ email|default:'' }}" class="form-control {% if errors.email %}is-invalid{% endif %}">
+                    {% if errors.email %}
+                      <div class="invalid-feedback">{{ errors.email }}</div>
+                    {% endif %}
+                </div>
+                  <div class="form-group">
                       <label for="subject">Subject</label>
-                      <input type="text" id="subject" name="subject">
+                      <input type="text" id="subject" name="subject" value="{{ subject|default:'' }}" class="form-control {% if errors.subject %}is-invalid{% endif %}">
+                      {% if errors.subject %}
+                        <div class="invalid-feedback">{{ errors.subject }}</div>
+                      {% endif %}
                   </div>
                   <div class="form-group">
                       <label for="message">Message</label>
-                      <textarea id="message" name="message" ></textarea>
+                      <textarea id="message" name="message" class="form-control {% if errors.message %}is-invalid{% endif %}"></textarea>
+                      {% if errors.message %}
+                        <div class="invalid-feedback">{{ errors.message }}</div>
+                      {% endif %}
                   </div>
-                  <button type="submit" class="send-btn">Send Inquiry</button>
-              </form>
+                  <button type="submit" class="send-btn" id="submitBtn" data-not-logged-in="{{ is_not_logged_in|yesno:'true,false' }}">Send Inquiry</button>
+                </form>
+                
           </div>
         </div>
 
-    
+
     <footer class="footer">
-        <div class="footer-content">
-          <div class="footer-left">
-            <h3>RentMate</h3>
-            <p>
-              Welcome to <strong>RentMate</strong>, your trusted partner in property management. We streamline the rental process, making it effortless for landlords to manage properties and tenants to find their ideal homes.
+      <div class="footer-content">
+        <div class="footer-left">
+          <h3>RentMate</h3>
+          <p>
+            Welcome to <strong>RentMate</strong>, your trusted partner in property management. We streamline the rental
+            process, making it effortless for landlords to manage properties and tenants to find their ideal homes.
           </p>
           <p>
-              At <strong>RentMate</strong>, we prioritize efficiency, transparency, and convenience. Whether you're a property owner tracking rent payments and maintenance requests or a tenant seeking a hassle-free rental experience, our platform provides a seamless solution.
+            At <strong>RentMate</strong>, we prioritize efficiency, transparency, and convenience. Whether you're a
+            property owner tracking rent payments and maintenance requests or a tenant seeking a hassle-free rental
+            experience, our platform provides a seamless solution.
           </p>
           <p>
-              With user-friendly features, real-time updates, and a secure platform, <strong>RentMate</strong> redefines property management—simpler, smarter, and stress-free.
+            With user-friendly features, real-time updates, and a secure platform, <strong>RentMate</strong> redefines
+            property management—simpler, smarter, and stress-free.
           </p>
+        </div>
+        <div class="footer-right">
+          <div class="contact-info">
+            <p>Address: Kathmandu, Nepal</p>
+            <p>Phone: +977 123 456 789</p>
+            <p>Email: info@RentMate.com</p>
           </div>
-          <div class="footer-right">
-            <div class="contact-info">
-              <p>Address: Kathmandu, Nepal</p>
-              <p>Phone: +977 123 456 789</p>
-              <p>Email: info@RentMate.com</p>
-            </div>
-            <div class="social-icons">
-              <a href="#" target="_blank">
-                <img src="{% static 'img/facebook.png' %}" alt="Facebook" class="social-icon">
-              </a>
-              <a href="#" target="_blank">
-                <img src="{% static 'img/instagram.png' %}" alt="Instagram" class="social-icon">
-              </a>
-              <a href="#" target="_blank">
-                <img src="{% static 'img/twitter.png' %}" alt="Twitter" class="social-icon">
-              </a>
-              <a href="#" target="_blank">
-                <img src="{% static 'img/youtube.png' %}" alt="YouTube" class="social-icon">
-              </a>
-            </div>
+          <div class="social-icons">
+            <a href="#" target="_blank">
+              <img src="{% static 'img/facebook.png' %}" alt="Facebook" class="social-icon">
+            </a>
+            <a href="#" target="_blank">
+              <img src="{% static 'img/instagram.png' %}" alt="Instagram" class="social-icon">
+            </a>
+            <a href="#" target="_blank">
+              <img src="{% static 'img/twitter.png' %}" alt="Twitter" class="social-icon">
+            </a>
+            <a href="#" target="_blank">
+              <img src="{% static 'img/youtube.png' %}" alt="YouTube" class="social-icon">
+            </a>
           </div>
         </div>
-      </footer>
-      <script>
-        function closeAlert(button) {
-          button.parentElement.style.display = "none";
-        }
-      </script>
-    </body>
-    </html>      
+      </div>
+    </footer>
+    <script>
+      function closeAlert(button) {
+        button.parentElement.style.display = "none";
+      }
+    </script>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const submitBtn = document.getElementById("submitBtn");
+
+      if (submitBtn) {
+          const isNotLoggedIn = submitBtn.getAttribute("data-not-logged-in") === "true";
+
+          if (isNotLoggedIn) {
+              submitBtn.addEventListener("click", function (event) {
+                  event.preventDefault(); // Stop form submission
+                  alert("You must log in to send an inquiry."); // Show popup
+              });
+          }
+      }
+  });
+</script>
+</html>

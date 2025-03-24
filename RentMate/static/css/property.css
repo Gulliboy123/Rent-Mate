@@ -1,280 +1,404 @@
 /* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;/*layout calculation*/
-    
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;/*layout calculation*/
+  
 }
 
 /* Header Styling */
 header {
 
-    display: flex;/*ensure horizontal allignment*/
-    justify-content: space-between; /* Pushes content to left and right */
-    align-items: center; /* Vertically aligns items in the same line */
-    padding: 0 20px; /* Adds spacing on both sides */
-    height: 70px; /* Fixed navbar height */
-    border-bottom: 1px solid  #4B5945; /* Optional: Bottom border for styling */
-    position: fixed; /* Fixed position at the top */
-    top: 0; /* Aligns the navbar to the top */
-    left: 0; /* Ensures navbar starts from the left */
-    right: 0; /* Ensures navbar ends at the right edge */
-    width: 100%; /* Makes navbar span the full width */
-    z-index: 1000; /* Ensures the navbar appears above other content */
-    background-color: #fff;
-   
+  display: flex;/*ensure horizontal allignment*/
+  justify-content: space-between; /* Pushes content to left and right */
+  align-items: center; /* Vertically aligns items in the same line */
+  padding: 0 20px; /* Adds spacing on both sides */
+  height: 70px; /* Fixed navbar height */
+  border-bottom: 1px solid  #4B5945; /* Optional: Bottom border for styling */
+  position: fixed; /* Fixed position at the top */
+  top: 0; /* Aligns the navbar to the top */
+  left: 0; /* Ensures navbar starts from the left */
+  right: 0; /* Ensures navbar ends at the right edge */
+  width: 100%; /* Makes navbar span the full width */
+  z-index: 1000; /* Ensures the navbar appears above other content */
+  background-color: #fff;
+ 
 }
 
 /* Logo Styling */
 header .logo {
-    flex: 0 0 auto; /* Keeps the logo
- fixed in size */
+  flex: 0 0 auto; /* Keeps the logo
+fixed in size */
 
 }
 
 header .logo img {
-    height: 100%; /* Logo scales with the header height */
-    max-height: 60px; /* Prevents logo from getting too large */
-    width: auto; /* Maintain aspect ratio */
+  height: 100%; /* Logo scales with the header height */
+  max-height: 60px; /* Prevents logo from getting too large */
+  width: auto; /* Maintain aspect ratio */
 }
 
 /* Navbar Styling */
 nav {
-    flex: 1;
-    text-align: right;
-  }
-  
-  nav ul {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    justify-content: flex-end;
-    margin-top: 13px;
-  }
-  
-  nav ul li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    font-weight: 500; /* Slightly thicker font */
-    padding: 10px 20px; /* Increases the clickable area */
-    border-radius: 20px; /* Makes the shape oval */
-    transition: 0.3s ease-in-out;
-  }
-  
-  /* Active Link Styling */
-  nav ul li.active a {
-    background-color: #f4c91d; /* Yellow background */
-    color: #ffffff; /* White text */
-    border-radius: 25px; /* Ensures a perfect oval shape */
-    font-weight: 500; /* Bolder text */
-  }
-  
-  /* Hover Effect */
-  nav ul li a:hover {
-    background-color: #F4D03F; /* Slightly lighter yellow */
-    color: #ffffff;
-    text-decoration: none; /* Removes underline */
-    border-radius: 25px;
-  }
-  
-  
-  /* Dropdown Styling */
-  .dropdown {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-top:-17px;
-  }
-  
-  .dropdown-toggle {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    padding: 8px 16px;
-    border-radius: 25px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .dropdown-toggle:hover {
-    background-color: #F4D03F;
-    color: #ffffff;
-  }
-  
-  .rounded-circle {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    text-decoration: none;
-    background-color: #445e78;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-  }
-  
-  .dropdown-toggle span {
-    font-size: 14px;
-    font-weight: 550;
-    color: #333;
-    text-transform: capitalize;
-    white-space: nowrap;
-  }
-  .dropdown-toggle span:hover {
-    color:white;
-  }
-  .dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    min-width: 200px;
-    z-index: 1000;
-    margin-top:220px;
-    text-align: left;
-  }
-  
-  .dropdown:hover .dropdown-menu {
-    display: block;
-  }
-  
-  .dropdown-menu a {
-    display: block;
-    padding: 10px 20px;
-    font-size: 15px;
-    color: #333;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    margin-top:4px;
-  }
-  
-  .dropdown-menu a:hover {
-    background-color: #F4D03F;
-    color: #ffffff;
-  }
-  
-  .dropdown-menu .text-danger {
-    color: #e74c3c;
-    margin-bottom: 4px;
-  }
-  
-  .dropdown-menu .text-danger:hover {
-    background-color: #e74c3c;
-    color: #ffffff;
-  }
-  
-  .dropdown-divider {
-    height: 1px;
-    background-color: #ddd;
-    margin: 8px 0;
-  }
+  flex: 1;
+  text-align: right;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  justify-content: flex-end;
+  margin-top: 13px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500; /* Slightly thicker font */
+  padding: 10px 20px; /* Increases the clickable area */
+  border-radius: 20px; /* Makes the shape oval */
+  transition: 0.3s ease-in-out;
+}
+
+/* Active Link Styling */
+nav ul li.active a {
+  background-color: #ef9e13; /* Yellow background */
+  color: #ffffff; /* White text */
+  border-radius: 25px; /* Ensures a perfect oval shape */
+  font-weight: 500; /* Bolder text */
+}
+
+/* Hover Effect */
+nav ul li a:hover {
+  background-color: #ef9e13;  /* Slightly lighter yellow */
+  color: #ffffff;
+  text-decoration: none; /* Removes underline */
+  border-radius: 25px;
+}
+
+
+/* Dropdown Styling */
+.dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top:-17px;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  background-color: #ef9e13; 
+  color: #ffffff;
+}
+
+.rounded-circle {
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  text-decoration: none;
+  background-color: #7a550b;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.dropdown-toggle span {
+  font-size: 14px;
+  font-weight: 550;
+  color: #333;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+.dropdown-toggle span:hover {
+  color:white;
+}
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1000;
+  margin-top:220px;
+  text-align: left;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-top:4px;
+}
+
+.dropdown-menu a:hover {
+  background-color: #ef9e13; 
+  color: #ffffff;
+}
+
+.dropdown-menu .text-danger {
+  color: #e74c3c;
+  margin-bottom: 4px;
+}
+
+.dropdown-menu .text-danger:hover {
+  background-color: #e74c3c;
+  color: #ffffff;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 8px 0;
+}
+
 /* Image Section Styling */
 
 .image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
 }
 
 .property-image-container {
-    width: 100%;
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+  width: 100%;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .property-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 45%;/* Shift image down by 20% of the container height */
-    filter: blur(3px); /* Adds a blur effect to the image */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 45%;/* Shift image down by 20% of the container height */
+  filter: blur(3px); /* Adds a blur effect to the image */
 
 }
 
 .property-image-container h1 {
-    position: absolute; /* Absolute positioning to place the text over the image */
-    color: white; /* White text color for visibility */
-    font-size: 4rem; /* Text size */
-    font-weight: bold; /* Makes the text bold */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Adds shadow for better contrast */
-    text-align: center; /* Centers the text */
-    padding: 0px 30px; /* Adds padding if necessary for larger text */
+  position: absolute; /* Absolute positioning to place the text over the image */
+  color: white; /* White text color for visibility */
+  font-size: 4rem; /* Text size */
+  font-weight: bold; /* Makes the text bold */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Adds shadow for better contrast */
+  text-align: center; /* Centers the text */
+  padding: 0px 30px; /* Adds padding if necessary for larger text */
 }
 
 .property-image-container p {
-    position: absolute;
-    color: white;
-    font-size: 1.1rem;
-    margin-top: 85px; /* Adds spacing below the heading */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Subtle shadow for readability */
+  position: absolute;
+  color: white;
+  font-size: 1.1rem;
+  margin-top: 85px; /* Adds spacing below the heading */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Subtle shadow for readability */
 }
 
 /* Search Section Styles */
 .search-section {
-    position: absolute;/* Position it over the image */
-    width:100%;
-    margin-top: -20px; 
-    padding:15px;
+  position: absolute;/* Position it over the image */
+  width:100%;
+  margin-top: -20px; 
+  padding:15px;
 }
 
 .search-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    background-color: #ffffff; /* Background color for the search container */
-    padding: 20px; /* Add padding for spacing inside the container */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff; /* Background color for the search container */
+  padding: 20px; /* Add padding for spacing inside the container */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
 }
 
 .location-box {
-    flex: 1;
+  flex: 1;
 }
 
 .search-box {
-    flex: 2; /* Make the search box a bit longer */
+  flex: 2; /* Make the search box a bit longer */
 }
 
-.property-type-box {
-    flex: 0.5; /* Make the hostel type box a bit smaller */
+.hostel-type-box {
+  flex: 0.5; /* Make the hostel type box a bit smaller */
 }
 
 .search-input, .location-input, .type-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    border: 1.2px solid black; /* Black border when input is focused */
-    outline: none;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1.2px solid black; /* Black border when input is focused */
+
 }
 
 .search-btn-box {
-    flex: 0.2;
+  flex: 0.2;
 }
 
 .search-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #7a8e72;
-    color: rgb(29, 28, 28);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  background-color: #7a550b;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.search-btn:hover {
-    background-color: #4B5945;
+
+/* General Layout for the Filter and Hostels Section */
+.property-filter-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 120px; /* Offset for header */
 }
 
+/* Price Range Filter Styling */
+.price-filter {
+  flex: 0 0 15%; 
+  background-color: #f1f1f1; /* Light background */
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.price-filter h2 {
+color: #003366;
+}
+
+.price-filter label {
+display: block;
+margin: 10px 0 5px;
+}
+
+.range {
+width: 100%;
+margin: 10px 0;
+}
+
+.price-filter p {
+margin: 3px 0;
+font-weight: 14px;
+}
+
+.price-filter button {
+width: 100%;
+padding: 10px;
+background-color: #7a550b;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 4px;
+}
+
+
+/* Hostels Display Styling */
+.property-display {
+  flex: 1; /* Takes up remaining space */
+  padding-left: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+ 
+}
+
+/* Outer Card Container (Grid Layout for Hostels) */
+.outer-card {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  gap: 20px;
+  width: 100%;
+}
+
+/* Inner Card for each Hostel */
+.inner-card {
+  background-color: #e1a949; /* Background color for each card */
+  border-radius: 5px;
+  width: 100%; /* Reduced width to make box smaller */
+  margin: 0 auto; /* Center align within grid */
+  overflow: hidden;
+  max-height:400px;
+}
+
+/* Image container */
+.image-wrapper {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 12px;
+  border-radius: 18px;
+}
+
+/* Content inside each card */
+.content {
+  padding: 15px;
+  text-align: center;
+}
+
+.content p {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff; /* Text color for the hostel name */
+  margin-top: -19px;
+  margin-bottom: 10px;
+}
+
+.content span {
+  display: block;
+  font-size: 0.9rem;
+  color: #fff; /* Text color for the location */
+  margin-top: 6px;
+}
+
+/* View more button */
+.view-details-container {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.view-details-btn {
+  background-color: #7a550b;
+  color: white;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}

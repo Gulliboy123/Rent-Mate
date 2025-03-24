@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/propertydetail.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Property Details</title>
+    <script src="https://cdn.khalti.com/khalti-checkout.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Location: {{ property.title }}</h1>
+        
+        <!-- Image Gallery -->
+        <div class="gallery">
+            {% if property.images.all %}
+                <div class="grid-container">
+                    <div class="main-image">
+                        <img src="{{ property.images.all.0.image.url }}" alt="{{ property.title }}">
+                    </div>
+                    <div class="side-images">
+                        {% for image in property.images.all|slice:"1:4" %}
+                            <img src="{{ image.image.url }}" alt="{{ property.title }}">
+                        {% endfor %}
+                    </div>
+                    <div class="large-image">
+                        <img src="{{ property.images.all.4.image.url }}" alt="{{ property.title }}">
+                    </div>
+                </div>
+            {% else %}
+                <img src="path/to/default-image.jpg" alt="Default Image">
+            {% endif %}
+        </div>
+        
+        
+
+        <!-- Content Section -->
+        <div class="content">
+            <div class="details">
+                <h2>What this place offers</h2>
+                <ul class="what-this-place-offers">
+                    <li><i class="fas fa-map-marker-alt" style="color: #1682a7;"></i> Location: {{ property.city }}, {{ property.country }}</li>
+                    <li><i class="fas fa-building" style="color: #1682a7;"></i> Neighbourhood: {{ property.city }}</li>
+                    <li><i class="fas fa-home" style="color: #1682a7;"></i> Type: {{ property.property_type }}</li>
+                    <li><i class="fas fa-bed" style="color: #1682a7;"></i> Bedrooms: {{ property.num_bedrooms }}</li>
+                    <li><i class="fas fa-bath" style="color: #1682a7;"></i> Bathrooms: {{ property.num_bathrooms }}</li>
+                    <li><i class="fas fa-utensils" style="color: #1682a7;"></i> Kitchens: {{ property.num_kitchens }}</li>
+                </ul>
+
+                <h2>Our Amenities</h2>
+<div class="facilities-container">
+    {% for amenity in amenities %}
+        <div class="facility-box">
+            <i class="fas 
+                {% if amenity == 'Lawn' %}fa-leaf
+                {% elif amenity == 'Drainage' %}fa-water
+                {% elif amenity == 'Jacuzzi' %}fa-hot-tub
+                {% elif amenity == 'Garage' %}fa-car
+                {% elif amenity == 'Parking' %}fa-parking
+                {% elif amenity == 'Air Condition' %}fa-snowflake
+                {% elif amenity == 'Balcony' %}fa-balance-scale
+                {% elif amenity == 'Deck' %}fa-palette
+                {% elif amenity == 'Fencing' %}fa-shield-alt
+                {% elif amenity == 'Water Supply' %}fa-tint
+                {% elif amenity == 'Garden' %}fa-seedling
+                {% elif amenity == 'CCTV' %}fa-camera
+                {% elif amenity == 'Pet Allowed' %}fa-paw
+                {% else %}fa-check-circle
+                {% endif %}"></i> 
+            {{ amenity }}
+        </div>
+    {% empty %}
+        <p>No amenities available.</p>
+    {% endfor %}
+</div>
+
+                
+
+
+
+                
+                    
+                <div class="description-container">
+                    <p><strong>Description:</strong> {{ property.description }}</p>
+                </div>
+            </div>
+
+            <div class="reservation">
+                <p><strong>Rs {{ property.price_per_night }}</strong> per night</p>
+                <div class="date-selection">
+                    <div class="date-box">
+                        <label>Check-in: <input type="date" id="checkin"></label>
+                    </div>
+                    <div class="date-box">
+                        <label>Check-out: <input type="date" id="checkout"></label>
+                    </div>
+                </div>
+                <div class="guest-selection">
+                    <label>Guests: 
+                        <select id="guest-select">
+                            <option>1 guest</option>
+                            <option>2 guests</option>
+                        </select>
+                    </label>
+                </div>
+                <button class="reserve">Reserve</button>
+                <p>You won't be charged yet</p>
+                <p id="price-breakdown"></p>
+                <hr>
+                <p><strong>Total before taxes: <span id="total-price">Rs 0</span></strong></p>
+            </div>
+        
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const checkin = document.getElementById("checkin");
+            const checkout = document.getElementById("checkout");
+            const totalPriceElem = document.getElementById("total-price");
+            const priceBreakdown = document.getElementById("price-breakdown");
+            const reserveBtn = document.querySelector(".reserve");
+            const pricePerNight = parseInt("{{ property.price_per_night }}", 10);  // Dynamically fetched and parsed to an integer
+    
+            let totalAmount = 0;
+    
+            function calculatePrice() {
+                const checkinDate = new Date(checkin.value);
+                const checkoutDate = new Date(checkout.value);
+    
+                if (checkinDate && checkoutDate && checkoutDate > checkinDate) {
+                    const nights = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+                    const baseCost = nights * pricePerNight;
+                    totalAmount = baseCost;
+    
+                    priceBreakdown.innerHTML = `Rs ${pricePerNight} x ${nights} nights = Rs ${baseCost}`;
+                    totalPriceElem.textContent = `Rs ${baseCost}`;
+                } else {
+                    priceBreakdown.innerHTML = "";
+                    totalPriceElem.textContent = "Rs 0";
+                }
+            }
+    
+            checkin.addEventListener("change", calculatePrice);
+            checkout.addEventListener("change", calculatePrice);
+    
+            reserveBtn.addEventListener("click", function() {
+                if (totalAmount > 0) {
+                    const config = {
+                        // Replace with your Khalti public key
+                        "publicKey": "your_public_key_here",
+                        "productIdentity": "product_identity",  // You can set this as the property or product ID
+                        "productName": "SANTIPHAP ROOM Reservation",
+                        "productUrl": window.location.href,
+                        "totalAmount": totalAmount * 100, // amount in paisa, so multiply by 100
+                        "eventHandler": {
+                            onSuccess: function(payload) {
+                                alert("Payment Successful");
+                            },
+                            onError: function(error) {
+                                alert("Payment Failed: " + error.message);
+                            },
+                            onClose: function() {
+                                alert("Payment Dialog Closed");
+                            }
+                        }
+                    };
+    
+                    const checkout = new KhaltiCheckout(config);
+                    checkout.show({ "amount": totalAmount * 100 });
+                } else {
+                    alert("Please select check-in and check-out dates.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

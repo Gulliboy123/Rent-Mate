@@ -1,12 +1,15 @@
-<!DOCTYPE html>
+<!DOCtype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hostels</title>
+    <title>Property</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/property.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -15,59 +18,147 @@
             </a>
         </div>
         <nav>
-            <ul>
-              <li class="{% if request.path == '/home/' %} active {% endif %}"><a href="{% url 'home' %}">Home</a></li>
-              <li class="{% if request.path == '/property/' %} active {% endif %}"><a href="{% url 'property' %}">Properties</a></li>
-              <li class="{% if request.path == '/aboutus/' %} active {% endif %}"><a href="{% url 'aboutus' %}">About Us</a></li>
-              <li class="{% if request.path == '/contactus/' %} active {% endif %}"><a href="{% url 'contactus' %}">Contact Us</a></li>
-              <li><a href="#">Register Property</a></li>
-  
-              {% if user.is_authenticated %}
-              <li class="dropdown">
-                <div class="dropdown-toggle">
-                  <div class="rounded-circle">{{ user.first_name|default:user.username|first|upper }}</div>
-                  <span>{{ user.get_full_name|default:user.username }}</span>
-                </div>
-                <div class="dropdown-menu">
-                  <a href="{% url 'my_account' %}">My account</a>
-                  <a href="{% url 'saved' %}">Saved</a>
-                  <a href="{% url 'bookings' %}">Booking History</a>
-                  <div class="dropdown-divider"></div>
-                  <a href="{% url 'logout' %}" class="text-danger">Logout</a>
-                </div>
-              </li>
-            {% else %}
-              <li><a href="{% url 'login' %}">Login</a></li>
-            {% endif %}
+        	 <ul>
+                {% if user.role == "property_manager" %}
+                <p>Welcome, Property Manager!</p>
+                {% elif user.role == "admin" %}
+                <p>Welcome, Admin!</p>
+                {% else %}
+                <p>Welcome, User!</p>
+                {% endif %}
+
+                <li class="{% if request.path == '/home/' %} active {% endif %}"><a href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="{% if request.path == '/property/' %} active {% endif %}"><a
+                        href="{% url 'property' %}">Properties</a></li>
+                <li class="{% if request.path == '/aboutus/' %} active {% endif %}"><a href="{% url 'aboutus' %}">About
+                        Us</a>
+                </li>
+                <li class="{% if request.path == '/contactus/' %} active {% endif %}"><a
+                        href="{% url 'contactus' %}">Contact
+                        Us</a></li>
+                {% if user.role == "property_manager" %}
+                <li class=" "><a href="">Property Dashboard</a></li>
+                {% endif %}
+                
+                {% if user.is_authenticated %}
+                <li class="dropdown">
+                    <div class="dropdown-toggle">
+                        <div class="rounded-circle">{{ user.first_name|default:user.username|first|upper }}</div>
+                        <span>{{ user.get_full_name|default:user.username }}</span>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'my_account' %}">My account</a>
+                        <a href="{% url 'saved' %}">Saved</a>
+                        <a href="{% url 'bookings' %}">Booking History</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{% url 'logout' %}" class="text-danger">Logout</a>
+                    </div>
+                </li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
-
+    
     <main>
         <section class="image">
             <div class="property-image-container">
-                <img src="{% static 'aboutimg/11.jpg' %}" alt="RentMate Banner">
-                <h1>About Us</h1>
-                <p>Get to know us properly.</p>
+                <img src="{% static 'img/5.jpg' %}" alt="RentMate Banner">
+                <h1>Property Search</h1>
+                <p>Search your desired property</p>
             </div>
         </section>
-        <!--Search-->
-        <div class="search-section">
-            <div class="search-container">
-                <div class="search-box">
-                    <input type="text" placeholder="Search" class="search-input">
+        <!--Search--> 
+        <form method="GET" action="{% url 'property' %}">
+            <div class="search-section">
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" name="city" placeholder="Search property by city" class="search-input">
+                    </div>
+                    <div class="hostel-type-box">
+                        <input type="text" name="property_type" placeholder="Flat or Room" class="type-input">
+                    </div>
+                    <div class="search-btn-box">
+                        <button type="submit" class="search-btn">Search</button>
+                    </div>
                 </div>
-                <div class="location-box">
-                    <input type="text" placeholder="Search location..." class="location-input">
-                </div>
-                <div class="hostel-type-box">
-                    <input type="text" placeholder="Boys or Girls Hostel..." class="type-input">
-                </div>
-                <div class="search-btn-box">
-                    <button class="search-btn">Search</button>
+            </div>
+        </form>
+        <div class="property-filter-container">
+                    <!-- Price Filter -->
+                    <div class="price-filter">
+                        <label for="budgetRange">Budget Filter:</label>
+                        <input type="range" class="range" id="budgetRange" min="5000" max="50000" step="1000" name="price_per_night" value="{{ request.GET.price_per_night|default:25000 }}" 
+                            oninput="updateBudgetValue(this.value)">
+                        <p>Selected Budget:Rs <span id="budgetValue">{{ request.GET.price_per_night|default:25000 }}</span></p>
+
+                        <button onclick="applyFilter()">Apply Filter</button>
+                    </div>
+
+                    <!-- Hostels Display -->
+                    <div class="property-display">
+                        <div class="outer-card">
+                            {% for property in property %}
+                                <div class="inner-card">
+                                    <div class="image-wrapper">
+                                        {% if property.images.all %}
+                      <img src="{{ property.images.first.image.url }}" alt="{{ property.title }}">
+                  {% else %}
+                      <img src="{% static 'img/4.jpg' %}" alt="Default Image">
+                  {% endif %}
+                                    </div>
+                                    <div class="content">
+                                        <p>{{ property.title }}</p>
+                                        <span><i class="fa-solid fa-city-dot"></i> {{ property.city}}</span>
+                                        <span><i class="fa-solid fa-money-bill-wave"></i> {{ property.price_per_night}}</span>
+                                    </div>
+                                    <div class="view-details-container">
+                                        <a href="{% url 'propertydetail' property.id %}"><button class="view-details-btn">View Details</button></a>
+                                    </div>
+                                    </div>
+                    {% empty %}
+                        <p>Sorry, no property found.</p>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </main>
+    <script>
+        // Update price value on range change
+        function updateBudgetValue(value) {
+        document.getElementById('budgetValue').textContent = value;
+        }
+        function applyFilter() {
+    let price_per_night = document.getElementById('budgetRange').value;
+    let currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('price_per_night', price_per_night);  // FIXED
+    window.location.href = currentUrl.toString();
+}
+
+
+        
+				 document.addEventListener('DOMContentLoaded', function () {
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+        
+            dropdownToggle.addEventListener('click', function (event) {
+            event.stopPropagation();
+            dropdownMenu.classList.toggle('show');
+            });
+        
+            dropdownMenu.addEventListener('click', function (event) {
+            event.stopPropagation(); // Prevent menu clicks from closing it
+            });
+        
+            document.addEventListener('click', function (event) {
+            if (!dropdownMenu.contains(event.target) && !dropdownToggle.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+            });
+        });
+    </script>
 </body>
+
 </html>

@@ -38,6 +38,9 @@ urlpatterns = [
     path('forgotpassword/', views.ForgotPassword, name='forgotpassword'),
     path('newpassword/<str:user>/', views.NewPasswordPage, name='newpassword'),
     path('message/', views.Message, name='message'),
+    path('propertydetail/<int:id>/', views.property_detail, name='propertydetail'),
+    path('propertyownerdashboard/', views.Propertyownerdashboard, name='propertyownerdashboard'),
+    path('propertyadd/', views.PropertyAdd, name='propertyadd'),
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

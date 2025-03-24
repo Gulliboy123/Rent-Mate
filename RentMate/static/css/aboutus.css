@@ -64,7 +64,7 @@ nav {
   
   /* Active Link Styling */
   nav ul li.active a {
-    background-color: #f4c91d; /* Yellow background */
+    background-color: #ef9e13;  /* Yellow background */
     color: #ffffff; /* White text */
     border-radius: 25px; /* Ensures a perfect oval shape */
     font-weight: 500; /* Bolder text */
@@ -72,7 +72,7 @@ nav {
   
   /* Hover Effect */
   nav ul li a:hover {
-    background-color: #F4D03F; /* Slightly lighter yellow */
+    background-color: #ef9e13;  /* Slightly lighter yellow */
     color: #ffffff;
     text-decoration: none; /* Removes underline */
     border-radius: 25px;
@@ -98,7 +98,7 @@ nav {
   }
   
   .dropdown-toggle:hover {
-    background-color: #F4D03F;
+    background-color: #ef9e13; 
     color: #ffffff;
   }
   
@@ -155,7 +155,7 @@ nav {
   }
   
   .dropdown-menu a:hover {
-    background-color: #F4D03F;
+    background-color: #ef9e13; 
     color: #ffffff;
   }
   
