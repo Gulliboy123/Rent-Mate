@@ -1,64 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Page</title>
-
-  {% load static %}
+{% block styles %}
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
+  <!--For Map-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""/>
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+ integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+ crossorigin=""></script>
+{% endblock styles%}
 
-<body>
-  <header>
-    <div class="logo">
-      <a href="#">
-        <img src="{% static 'img/RentMate.png' %}" alt="RentMate Logo">
-      </a>
-    </div>
-    <nav>
-      <ul>
-        {% if user.role == "property_manager" %}
-        <p>Welcome, Property Manager!</p>
-        {% elif user.role == "admin" %}
-        <p>Welcome, Admin!</p>
-        {% else %}
-        <p>Welcome, User!</p>
-        {% endif %}
-
-        <li class="{% if request.path == '/home/' %} active {% endif %}"><a href="{% url 'home' %}">Home</a></li>
-        <li class="{% if request.path == '/property/' %} active {% endif %}"><a
-            href="{% url 'property' %}">Properties</a></li>
-        <li class="{% if request.path == '/aboutus/' %} active {% endif %}"><a href="{% url 'aboutus' %}">About Us</a>
-        </li>
-        <li class="{% if request.path == '/contactus/' %} active {% endif %}"><a href="{% url 'contactus' %}">Contact
-            Us</a></li>
-        {% if user.role == "property_manager" %}
-        <li class=" "><a href="">Property Dashboard</a></li>
-        {% endif %}
-
-        {% if user.is_authenticated %}
-        <li class="dropdown">
-          <div class="dropdown-toggle">
-            <div class="rounded-circle">{{ user.first_name|default:user.username|first|upper }}</div>
-            <span>{{ user.get_full_name|default:user.username }}</span>
-          </div>
-          <div class="dropdown-menu">
-            <a href="{% url 'my_account' %}">My account</a>
-            <a href="{% url 'saved' %}">Saved</a>
-            <a href="{% url 'bookings' %}">Booking History</a>
-            <div class="dropdown-divider"></div>
-            <a href="{% url 'logout' %}" class="text-danger">Logout</a>
-          </div>
-        </li>
-        {% else %}
-        <li><a href="{% url 'login' %}">Login</a></li>
-        {% endif %}
-      </ul>
-    </nav>
-  </header>
+{%block content %}
 
   <main>
     <section class="image">
@@ -101,95 +56,87 @@
 
     </section>
     <section class="explore-section">
-      <div class="explore-content">
-        <div class="explore-info">
-          <h2>Explore the properties with Us</h2>
-          <p><strong>About RentMate</strong></p>
-          <p>RentMate simplifies property management for landlords and tenants. Our platform ensures seamless rent
-            tracking, maintenance requests, and a hassle-free rental experience. With user-friendly features and
-            real-time updates, we make property management effortless—simpler, smarter, and stress-free!</p>
+      <div class="section">
+        <h2>What We Offer</h2>
 
-          <p><strong>Why Choose Us?</strong></p>
-          <ul>
-            <li>Effortless property management for landlords</li>
-            <li>Seamless and user-friendly tenant experience</li>
-            <li>Real-time updates and notifications</li>
-            <li>Secure and transparent platform</li>
-            <li>24/7 customer support</li>
-          </ul>
-
-          <a href="{% url 'aboutus' %}">
-            <button class="view-more-btn">View More</button>
-          </a>
+        <div class="features">
+            <div class="feature-box">
+                <i class="fas fa-hotel"></i>
+                <h3>Wide Selection of Property</h3>
+                <p>Choose from a variety of hostels that match your needs.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-laptop-house"></i>
+                <h3>User-Friendly Booking System</h3>
+                <p>Easily book your hostel with our seamless process.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-headset"></i>
+                <h3>24/7 Customer Support</h3>
+                <p>We’re here to assist you anytime, anywhere.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fas fa-star"></i>
+                <h3>Verified Reviews</h3>
+                <p>Get genuine feedback from real users.</p>
+            </div>
+            <div class="feature-box">
+              <i class="fas fa-clock"></i>
+              <h3>Real-Time Updates</h3>
+              <p>Get real time updates on time.</p>
+          </div>
         </div>
-        <div class="explore-image">
-          <img src="{% static 'img/12.jpg' %}" alt="Explore RentMate" class="explore-img">
-        </div>
-      </div>
+    </div>
     </section>
 
     <section class="map-section">
-      <h2>Explore properties</h2>
-      <div class="map-container">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.438120251969!2d85.32396061451997!3d27.70824948280481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19076d6fa6e1%3A0xc51e3e705315b4d9!2sKathmandu%2C%20Nepal!5e0!3m2!1sen!2sus!4v1677586948472!5m2!1sen!2sus"
-          width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <h2>View Property Location</h2>
+      <div id="map" class="map-container">
       </div>
-    </section>
+  </section>
   </main>
-
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-left">
-        <h3>RentMate</h3>
-        <p>RentMate simplifies property management for landlords and tenants. Our platform ensures seamless rent
-          tracking, maintenance requests, and a hassle-free rental experience. With user-friendly features and real-time
-          updates, we make property management effortless—simpler, smarter, and stress-free!</p>
-      </div>
-      <div class="footer-right">
-        <div class="contact-info">
-          <p>Address: Kathmandu, Nepal</p>
-          <p>Phone: +977 123 456 789</p>
-          <p>Email: info@RentMate.com</p>
-        </div>
-        <div class="social-icons">
-          <a href="#" target="_blank">
-            <img src="{% static 'img/facebook.png' %}" alt="Facebook" class="social-icon">
-          </a>
-          <a href="#" target="_blank">
-            <img src="{% static 'img/instagram.png' %}" alt="Instagram" class="social-icon">
-          </a>
-          <a href="#" target="_blank">
-            <img src="{% static 'img/twitter.png' %}" alt="Twitter" class="social-icon">
-          </a>
-          <a href="#" target="_blank">
-            <img src="{% static 'img/youtube.png' %}" alt="YouTube" class="social-icon">
-          </a>
-        </div>
-      </div>
-    </div>
-  </footer>
+  {% endblock %}
+  {% block scripts %}
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownMenu = document.querySelector('.dropdown-menu');
+    //For Map
+    document.addEventListener("DOMContentLoaded", function () {
+      var map = L.map('map').setView([27.7102, 85.3240], 15);
 
-      dropdownToggle.addEventListener('click', function (event) {
-        event.stopPropagation();
-        dropdownMenu.classList.toggle('show');
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      // Remove default attribution
+      map.attributionControl.setPrefix(false);
+
+      // Fetch hostel locations from Django API
+      fetch('/api/hostels/')  
+          .then(response => response.json())
+          .then(data => {
+              data.forEach(hostel => {
+                  L.marker([hostel.latitude, hostel.longitude]).addTo(map)
+                      .bindPopup(`<b>${hostel.title}</b> <br> <a href='/hosteldetails/${hostel.id}' style="color: #1E90FF; text-decoration: none; margin-left:25px; font-weight: bold;">View Details</a>`);
+              });
+          })
+          .catch(error => console.error("Error fetching hostel data:", error));
+  });
+//Previous and Next button
+  document.addEventListener("DOMContentLoaded", function () {
+      const scrollContainer = document.querySelector(".outer-card");
+      const prevBtn = document.querySelector(".prev-btn");
+      const nextBtn = document.querySelector(".next-btn");
+
+      let hostelWidth = scrollContainer.firstElementChild.offsetWidth; // Get one hostel width
+      let visibleHostels = 4; // Number of hostels visible at a time
+      let scrollAmount = (hostelWidth + 30) * visibleHostels; // (Width + gap) * 4 hostels
+
+      nextBtn.addEventListener("click", () => {
+          scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
       });
 
-      dropdownMenu.addEventListener('click', function (event) {
-        event.stopPropagation(); // Prevent menu clicks from closing it
+      prevBtn.addEventListener("click", () => {
+          scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
       });
-
-      document.addEventListener('click', function (event) {
-        if (!dropdownMenu.contains(event.target) && !dropdownToggle.contains(event.target)) {
-          dropdownMenu.classList.remove('show');
-        }
-      });
-    });
+  });
   </script>
-</body>
-
-</html>
+{% endblock %}

@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from RentMate.settings import EMAIL_HOST_USER
+
 #email validation
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -21,7 +22,7 @@ User = get_user_model()
 
 
 # Create your views here.
-@login_required(login_url='login')
+#@login_required(login_url='login')
 def HomePage(request):
     properties = PropertyDetail.objects.filter(approval_status='approved')
     return render(request, 'home.html', {'properties':properties})
@@ -219,6 +220,7 @@ def property_detail(request, id):
         'amenities': amenities_list  # Pass as a list to template
     })
 
+
 #Forgot Password
 def ForgotPassword(request):
     if request.method == "POST":
@@ -227,7 +229,7 @@ def ForgotPassword(request):
         if User.objects.filter(email=email).exists():
             user = User.objects.get(email=email)
             print("User Exists")
-            send_mail("Reset Your Password", f"Hello User: {user}!\nTo reset password, click on the given link \n http://127.0.0.1:8000/newpassword/{user}", EMAIL_HOST_USER, [email], fail_silently=True)
+            send_mail("Reset Your Password", f"Hello User: {user}!\nTo reset password, click on the given link \n http://127.0.0.1:8000/newpassword/{user}", settings.EMAIL_HOST_USER, [email], fail_silently=True)
             messages.success(request, "Password reset link has been sent to your email.")
         else:
             return render(request, 'forgotpassword.html', {"errors": {"email": "Email does not exist"}})

@@ -35,7 +35,7 @@ class ContactUsAdmin(admin.ModelAdmin):
             send_mail(
                 subject=f"Reply to: {obj.subject}",
                 message=obj.reply,
-                from_email='rentmate55@gmail.com',  
+                from_email='djangop951@gmail.com',  
                 recipient_list=[obj.email],
                 fail_silently=False,
             ) 

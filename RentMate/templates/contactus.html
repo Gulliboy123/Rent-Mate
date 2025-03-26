@@ -1,66 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% load static %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Page</title>
-  <!-- Font Awesome CDN -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
-  {% load static %}
+{% block styles %}
   <link rel="stylesheet" href="{% static 'css/contactus.css' %}">
-</head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+{% endblock styles%}
 
-<body>
-  <header>
-    <div class="logo">
-      <a href="#">
-        <img src="{% static 'img/RentMate.png' %}" alt="RentMate Logo">
-      </a>
-    </div>
-    <nav>
-      <ul>
-        {% if user.role == "property_manager" %}
-        <p>Welcome, Property Manager!</p>
-        {% elif user.role == "admin" %}
-        <p>Welcome, Admin!</p>
-        {% else %}
-        <p>Welcome, User!</p>
-        {% endif %}
-
-        <li class="{% if request.path == '/home/' %} active {% endif %}"><a href="{% url 'home' %}">Home</a></li>
-        <li class="{% if request.path == '/property/' %} active {% endif %}"><a
-            href="{% url 'property' %}">Properties</a></li>
-        <li class="{% if request.path == '/aboutus/' %} active {% endif %}"><a href="{% url 'aboutus' %}">About Us</a>
-        </li>
-        <li class="{% if request.path == '/contactus/' %} active {% endif %}"><a href="{% url 'contactus' %}">Contact
-            Us</a></li>
-        {% if user.role == "property_manager" %}
-        <li class=" "><a href="">Property Dashboard</a></li>
-        {% endif %}
-
-        {% if user.is_authenticated %}
-        <li class="dropdown">
-          <div class="dropdown-toggle">
-            <div class="rounded-circle">{{ user.first_name|default:user.username|first|upper }}</div>
-            <span>{{ user.get_full_name|default:user.username }}</span>
-          </div>
-          <div class="dropdown-menu">
-            <a href="{% url 'my_account' %}">My account</a>
-            <a href="{% url 'saved' %}">Saved</a>
-            <a href="{% url 'bookings' %}">Booking History</a>
-            <div class="dropdown-divider"></div>
-            <a href="{% url 'logout' %}" class="text-danger">Logout</a>
-          </div>
-        </li>
-        {% else %}
-        <li><a href="{% url 'login' %}">Login</a></li>
-        {% endif %}
-      </ul>
-    </nav>
-  </header>
-
+{%block content %}
   <main>
     <section class="image">
       <div class="property-image-container">
@@ -134,56 +80,12 @@
                 
           </div>
         </div>
-
-
-    <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-left">
-          <h3>RentMate</h3>
-          <p>
-            Welcome to <strong>RentMate</strong>, your trusted partner in property management. We streamline the rental
-            process, making it effortless for landlords to manage properties and tenants to find their ideal homes.
-          </p>
-          <p>
-            At <strong>RentMate</strong>, we prioritize efficiency, transparency, and convenience. Whether you're a
-            property owner tracking rent payments and maintenance requests or a tenant seeking a hassle-free rental
-            experience, our platform provides a seamless solution.
-          </p>
-          <p>
-            With user-friendly features, real-time updates, and a secure platform, <strong>RentMate</strong> redefines
-            property management—simpler, smarter, and stress-free.
-          </p>
-        </div>
-        <div class="footer-right">
-          <div class="contact-info">
-            <p>Address: Kathmandu, Nepal</p>
-            <p>Phone: +977 123 456 789</p>
-            <p>Email: info@RentMate.com</p>
-          </div>
-          <div class="social-icons">
-            <a href="#" target="_blank">
-              <img src="{% static 'img/facebook.png' %}" alt="Facebook" class="social-icon">
-            </a>
-            <a href="#" target="_blank">
-              <img src="{% static 'img/instagram.png' %}" alt="Instagram" class="social-icon">
-            </a>
-            <a href="#" target="_blank">
-              <img src="{% static 'img/twitter.png' %}" alt="Twitter" class="social-icon">
-            </a>
-            <a href="#" target="_blank">
-              <img src="{% static 'img/youtube.png' %}" alt="YouTube" class="social-icon">
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
+{% endblock %}
+{%block scripts%}
     <script>
       function closeAlert(button) {
         button.parentElement.style.display = "none";
       }
-    </script>
-</body>
-<script>
   document.addEventListener("DOMContentLoaded", function () {
       const submitBtn = document.getElementById("submitBtn");
 
@@ -199,4 +101,4 @@
       }
   });
 </script>
-</html>
+{% endblock %}

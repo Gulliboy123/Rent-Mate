@@ -140,12 +140,27 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
 LOGIN_URL = '/login/'  # Default login URL
 LOGIN_REDIRECT_URL = '/home/'  # Where to redirect after login
 
+JAZZMIN_SETTINGS = {
+    "site_title": "RentMate",
+    "site_header": "RentMate",
+    "site_brand": "RentMate Admin",
+    # Add your own branding here
+    "welcome_sign": "Welcome to the RentMate",
+    "site_logo": "admin/img/Rentmate.png",
+    "site_logo_classes": "site-logo shadow-none",
+    # Copyright on the footer
+    "copyright": "RentMate",
+    "user_avatar": None,
+    # For generating the design
+    "show_ui_builder": True,
+    "custom_css": ".site-logo { width: 20px; height: auto; }",  # CSS added inside the settings
+}
 
 #SMTP Confirmation
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'rentmate55@gmail.com'
-EMAIL_HOST_PASSWORD = 'rqtq lvct jbfg yrwh'  # Replace with App Password
+EMAIL_HOST_USER = 'djangop951@gmail.com'
+EMAIL_HOST_PASSWORD = 'jwqc awcp bieq gqky'  # Ensure this is an app password if 2FA is enabled

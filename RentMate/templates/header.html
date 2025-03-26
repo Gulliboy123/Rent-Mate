@@ -1,0 +1,36 @@
+{% load static %}
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="{% static 'img/Rentmate.png' %}" alt="RentMate Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li class="{% if user.is_authenticated and request.path == '/home/' %} active {% endif %}"><a href="{% url 'home' %}">Home</a></li>
+                <li class="{% if user.is_authenticated and request.path == '/property/' %} active {% endif %}"><a href="{% url 'property' %}">Property</a></li>
+                <li class="{% if user.is_authenticated and request.path == '/aboutus/' %} active {% endif %}"><a href="{% url 'aboutus' %}">About Us</a></li>
+                <li class="{% if user.is_authenticated and request.path == '/contactus/' %} active {% endif %}"><a href="{% url 'contactus' %}">Contact Us</a></li>
+                
+                <!-- Show Profile When Logged In, Show Sign Up/Login When Logged Out -->
+                {% if user.is_authenticated %}
+                <li class="dropdown">
+                  <div class="dropdown-toggle">
+                    <div class="rounded-circle">{{ user.first_name|default:user.username|first|upper }}</div>
+                    <span>{{ user.get_full_name|default:user.username }}</span>
+                  </div>
+                  <div class="dropdown-menu">
+                    <a href="{% url 'my_account' %}">Account</a>
+                    <a href="{% url 'saved' %}">Favourites</a>
+                    <a href="{% url 'bookings' %}">Past Booking</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'logout' %}" class="text-danger">Logout</a>
+                  </div>
+                </li>
+              {% else %}
+                <li><a href="{% url 'signup' %}" class="btn-signup">Sign Up</a></li>
+                <li><a href="{% url 'login' %}" class="btn-login">Login</a></li>
+              {% endif %}
+            </ul>
+        </nav>
+    </header>
